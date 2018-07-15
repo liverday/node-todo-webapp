@@ -1,0 +1,12 @@
+.error-alert {
+    width: calc(100% - 20px);
+    position: absolute;
+    top: -50px;
+    left: 10px;
+    z-index: 2000;
+    transition: .2s ease-out;
+}
+
+.error-alert.in {
+    top: 10px;
+}
