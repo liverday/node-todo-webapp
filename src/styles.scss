@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+$base-margin: 1em;
+.text-center {
+    text-align: center;
+}
+
+.base-margin-v {
+    margin-top: $base-margin;
+    margin-bottom: $base-margin;
+}
+
+.vertical-middle {
+    vertical-align: middle;
+}

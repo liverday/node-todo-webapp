@@ -5,15 +5,19 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoginRoutingModule } from './login-routing.module';
+import { DoLoginComponent } from './do-login/do-login.component';
 
 
 @NgModule({
     imports: [
         AppBootstrapImportsModule,
-        LoginRoutingModule
+        LoginRoutingModule,
+        CommonModule,
+        FormsModule
     ], 
     declarations: [
-        LoginComponent
+        LoginComponent,
+        DoLoginComponent
     ],
     providers: [
         AuthenticationService
