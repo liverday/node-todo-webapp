@@ -1,6 +1,7 @@
 import { Component, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 
 @Component({
     styleUrls: ['./do-login.scss'],
@@ -15,8 +16,9 @@ export class DoLoginComponent {
         private route: ActivatedRoute,
         private titleService: Title,
         private sanitizer: DomSanitizer,
+        private auth: AuthenticationService
     ) {
-        this.titleService.setTitle('Login Backoffice');
+        this.titleService.setTitle('Login Todo');
     }
 
     async onSubmit(event) {
@@ -24,8 +26,11 @@ export class DoLoginComponent {
         event.stopPropagation();
         try {
             this.state = 'loading';
+            await this.auth.authenticate(this.user.email, this.user.password);
+            this.router.navigate(['/todos']);
         } catch (e) {
-
+            console.error(e);
+            this.state = 'ready';
         }
     }
 }

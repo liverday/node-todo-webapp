@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-$base-margin: 1em;
+@import 'assets/variables';
 .text-center {
     text-align: center;
 }
@@ -11,4 +11,17 @@ $base-margin: 1em;
 
 .vertical-middle {
     vertical-align: middle;
+}
+
+.main-view {
+    text-align: center;
+    padding-left: 0;
+    margin-left: 0;
+    position: relative;
+    height: calc(100vh);
+    background: #841a1a; /* Old browsers */
+    background: -moz-linear-gradient(top, #841a1a 0%, #841919 50%, #841515 53%, #422323 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #841a1a 0%,#841919 50%,#841515 53%,#422323 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #841a1a 0%,#841919 50%,#841515 53%,#422323 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#841a1a', endColorstr='#422323',GradientType=0 ); /* IE6-9 */
 }

@@ -3,7 +3,6 @@ import { urlencode } from './url';
 
 export class HttpUtils {
     contentType: string;
-    authToken;
     constructor(protected http: HttpClient, protected endPoint: string) {
         this.contentType = 'application/json';
     }
@@ -18,14 +17,17 @@ export class HttpUtils {
                 headers: new HttpHeaders({
                     'Accept': 'application/json',
                     'Content-Type': this.contentType,
-                    'x-auth': this.authToken != null ? this.authToken : null
                 }),
-                withCredentials: true,
                 observe: null,
             };
             options.observe = 'response';
+            if (localStorage.getItem('authToken') != null) {
+                options.headers.append('x-auth', localStorage.getItem('authToken'))
+            }
             this.http.post(this.buildAddress(method), args, options).subscribe(
-                (res: HttpResponse<any>) => resolve(res.body),
+                (res: HttpResponse<any>) => { 
+                    resolve({result: res.body, xAuth: res.headers.get('x-auth')})
+                },
                 (error: HttpErrorResponse) => reject(error)
             );
         });
