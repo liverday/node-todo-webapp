@@ -6,8 +6,24 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './todo-list.html'
 })
 export class TodoListComponent implements OnInit { 
+    todo;
+    activeLink;
+    filterLinks = [
+        { label: 'Active', id: 1 },
+        { label: 'Completed', id: 2 },
+        { label: 'All', id: 3 },
+    ]
 
     ngOnInit() {
         
+    }
+
+    async onSubmit(form) {
+        
+    }
+
+    setLinkActive = (event) => {
+        console.log(event);
+        this.activeLink = event.id;
     }
 }

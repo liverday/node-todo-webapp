@@ -1,9 +1,17 @@
+@import '~src/assets/variables';
+
 $theme-colors: (
-    "primary": lighten(#841a1a, 10%)
+    "primary": lighten($base-bg-color, 10%)
 );
 
 @import url(https://fonts.googleapis.com/css?family=Roboto);
-$font-family-sans-serif: 'Roboto', sans-serif; 
+$font-base: 'Roboto';
+$font-family-sans-serif: $font-base, 'sans-serif' !default;
+$font-family-serif: $font-base, 'serif' !default;
+$font-family-monospace: $font-base, 'mono' !default;
+$font-family-base: $font-base;
+
+
 @import '~bootstrap/scss/bootstrap';
 
 

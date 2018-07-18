@@ -1,1 +1,19 @@
-<h1>Todo List Works</h1>
+<div class="container">
+
+    <div class="fill todo-list-container padding-h padding-v">
+        <h3 class="heading">What to do next?</h3>
+        <form #todoForm="ngForm" (ngSubmit)="onSubmit(todoForm)" >
+            <div class="form-group">
+                <input type="text" class="form-control" [required]="true" name="todo" [(ngModel)]="todo" placeholder="Type a todo">
+            </div>
+        </form>
+    </div>
+    <div class="divider"></div>
+    <div class="controls padding-v">
+            <ul class="nav padding-h justify-content-center">
+                <li class="nav-item" (click)="setLinkActive(link)" *ngFor="let link of filterLinks" >
+                    <a class="nav-link" [ngClass]="{'active': link.id == activeLink }">{{ link.label }}</a>
+                </li>
+            </ul>
+        </div>
+</div>

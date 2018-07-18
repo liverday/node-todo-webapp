@@ -1,2 +1,18 @@
 @import '~src/assets/variables';
 
+.header-view {
+    background-color: $header-bg;
+    padding-top: $base-margin;
+    padding-bottom: $base-margin;
+    justify-content: center;
+    & h1 {
+        color: lighten($base-white, 20%);
+        font-weight: bold;
+        text-shadow: 3px 5px 20px rgba(0,0,0, 0.4);
+    }
+
+    & small {
+        font-weight: normal; 
+        color: darken($base-white, 5%) !important;
+    }
+}

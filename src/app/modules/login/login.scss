@@ -1,4 +1,4 @@
-$brand-background: #fff;
+@import '~src/assets/variables';
 
 .login-container {
     background-color: $brand-background;
@@ -10,4 +10,8 @@ $brand-background: #fff;
     border: 1px thin black;
     border-radius: 2px;
     padding: 30px 60px;
+
+    & h3 {
+        font-weight: bold;
+    }
 }
