@@ -25,15 +25,92 @@
 }
 
 .todo-list-container {
+    
     .heading {
         font-weight: bold;
         color: $base-white;
     }
 
     & form { 
+        position: relative;
         .form-control {
-            box-shadow: 3px 3px 20px rgba(0,0,0, 0.3);
             padding-left: 30px;
+            display: inline;
+            border-right: none;
+            &:focus {
+                outline: none;
+                box-shadow: none !important ;
+                -webkit-box-shadow: none !important;
+                border:1px solid $border-form-control !important;
+                border-right: none !important;
+            }
+        }
+
+        .submit-todo-button {
+            height: 100%;
+            background-color: $base-white;
+            border: none; 
+
+            border-right: 1px solid $border-form-control;
+            border-top: 1px solid $border-form-control;
+            border-bottom: 1px solid $border-form-control;
+
+            border-radius: 0 0.25rem 0.25rem 0; 
+            top: 0;
+            right: 0;
+            width: 3em;
+            outline: none;
+            &:hover {
+                box-shadow: 3px 3px 5px rgba(0,0,0, 0.3);
+            }
+
+            & > i {
+                color: $base-green;
+            }
+        }
+    }
+
+    .todo-list {
+        padding: 0;
+        background-color: $base-white;
+        border-radius: 4px;
+        box-shadow: 3px 3px 20px rgba(0,0,0, 0.3);
+        .todo-item {
+            list-style: none;
+            color: $base-input-color;
+            border-bottom: thin solid rgba(0,0,0, 0.1);
+            &:hover {
+                color: black;
+                transition: 0.1s ease-in;
+            }
+
+            &  .todo-text {
+                padding-left: 40px;
+                text-decoration: none;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                align-items: center;
+                & .todo-text-span {
+                    flex: 1;
+                    text-align: center;
+                }
+                & .control-check {
+                    & > i {
+                        color: $base-green;
+                    } 
+                }
+
+                & .control-trash {
+                    & > i {
+                        color: $base-red;
+                    }
+                }
+            }
+
+            
         }
     }
 }
+

@@ -1,7 +1,20 @@
+@import '~bootstrap/scss/bootstrap';
+
+$border-form-control: $gray-400;
+$base-input-color: $gray-600;
+
+$base-green: $green;
+$base-red: $red;
+
 $base-bg-color: #841a1a;
 $base-bg-color-2: #841919;
 $base-bg-color-3: #841515;
 $base-bg-color-4: #422323;
+
+$base-bg-rgb-color: rgb(132, 26, 26);
+$base-bg-rgb-color-2: rgb(132, 25, 25);
+$base-bg-rgb-color-3:rgb(132, 21, 21);
+$base-bg-rgb-color-4: rgb(66, 35, 35);
 
 $base-divider: darken($base-bg-color, 15%);
 

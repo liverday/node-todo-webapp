@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { NotFoundComponent } from './utils/components/not-found/not-found.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthenticationGuardService } from './services/auth/authentication-guard.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './utils/http-interceptor';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,12 @@ import { ToastrModule } from 'ngx-toastr';
     {
       provide: LOCALE_ID, 
       useValue: 'pt'
+    },
+    AuthenticationGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
     }
   ],
   schemas: [

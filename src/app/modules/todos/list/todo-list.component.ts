@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import {  } from '@angular/router/src/router';
 
 @Component({
     selector: 'todo-list-component',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoListComponent implements OnInit { 
     todo;
+    todos;
     activeLink;
+
+    constructor(private route: ActivatedRoute, private router: Router) {
+        this.todos = route.snapshot.data.todos.result.todos
+    }
+
     filterLinks = [
         { label: 'Active', id: 1 },
         { label: 'Completed', id: 2 },
@@ -15,7 +23,6 @@ export class TodoListComponent implements OnInit {
     ]
 
     ngOnInit() {
-        
     }
 
     async onSubmit(form) {
@@ -23,7 +30,6 @@ export class TodoListComponent implements OnInit {
     }
 
     setLinkActive = (event) => {
-        console.log(event);
         this.activeLink = event.id;
     }
 }

@@ -1,4 +1,5 @@
 @import '~src/assets/variables';
+@import '~bootstrap/scss/bootstrap';
 
 $theme-colors: (
     "primary": lighten($base-bg-color, 10%)
@@ -12,8 +13,6 @@ $font-family-monospace: $font-base, 'mono' !default;
 $font-family-base: $font-base;
 
 
-@import '~bootstrap/scss/bootstrap';
 
 
 
- 

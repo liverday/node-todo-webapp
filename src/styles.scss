@@ -4,9 +4,29 @@
     text-align: center;
 }
 
+.pull-right {
+    float: right;
+}
+
+.margin-h {
+    margin-left: $base-margin;
+    margin-right: $base-margin;
+}
+
 .padding-v {
     padding-top: $base-margin;
     padding-bottom: $base-margin;
+}
+
+.padding-v-top {
+    padding-top: $base-margin;
+}
+
+
+
+.padding-v-slim {
+    padding-top: $base-margin / 2;
+    padding-bottom: $base-margin / 2;
 }
 
 .padding-h {

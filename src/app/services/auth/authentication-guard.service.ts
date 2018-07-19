@@ -19,9 +19,7 @@ export class AuthenticationGuardService implements CanActivateChild, CanActivate
     }
 
     canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        console.log('cheguei no roteador');
         if (!this.auth.isAuthenticated()) {
-            console.log('false');
             this.router.navigate(['login']);
             return false;
         }

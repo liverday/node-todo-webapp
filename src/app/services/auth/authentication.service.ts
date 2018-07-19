@@ -15,8 +15,8 @@ export class AuthenticationService extends HttpUtils {
     public authenticate(email: string, password: string): Promise<boolean> {
         return new Promise<boolean>(async (resolve, reject) => {
             try {
-                const result = await this.call('users/login', {email, password});
-                localStorage.setItem('authToken', result.xAuth);
+                const result = await this.callPost('users/login', {email, password});
+                localStorage.setItem('authToken', result.headers.get('x-auth'));
                 resolve();
             } catch (e) {
                 reject(e);

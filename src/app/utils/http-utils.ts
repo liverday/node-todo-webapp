@@ -2,16 +2,38 @@ import { HttpHeaders, HttpClient, HttpErrorResponse, HttpResponse } from '@angul
 import { urlencode } from './url';
 
 export class HttpUtils {
-    contentType: string;
+    contentType: string = 'application/json';
     constructor(protected http: HttpClient, protected endPoint: string) {
-        this.contentType = 'application/json';
+
     }
 
     private buildAddress(method) {
         return `${this.endPoint}/${method}`;
     }
 
-    call(method: string, args?: { [id: string]: any}) {
+    callPost(endPoint: string, args?: { [id: string]: any }) {
+        return new Promise<any>((resolve, reject) => {
+            const options = {
+                headers: new HttpHeaders({
+                    'Accept': 'application/json',
+                    'Content-Type': this.contentType,
+                }),
+                observe: null,
+            }
+            options.observe = 'response';
+            this.http.post(this.buildAddress(endPoint), args, options).subscribe(
+                (res: HttpResponse<any>) => {
+                    if (res.headers.get('x-auth') != null) {
+
+                    }
+                    resolve({ result: res.body, headers: res.headers })
+                },
+                (error: HttpErrorResponse) => reject(error)
+            );
+        });
+    }
+
+    callGet(endPoint: string) {
         return new Promise<any>((resolve, reject) => {
             const options = {
                 headers: new HttpHeaders({
@@ -21,12 +43,47 @@ export class HttpUtils {
                 observe: null,
             };
             options.observe = 'response';
-            if (localStorage.getItem('authToken') != null) {
-                options.headers.append('x-auth', localStorage.getItem('authToken'))
-            }
-            this.http.post(this.buildAddress(method), args, options).subscribe(
-                (res: HttpResponse<any>) => { 
-                    resolve({result: res.body, xAuth: res.headers.get('x-auth')})
+            this.http.get(this.buildAddress(endPoint), options).subscribe(
+                (res: HttpResponse<any>) => {
+                    resolve({ result: res.body })
+                },
+                (error: HttpErrorResponse) => reject(error)
+            );
+        });
+    }
+
+    callPatch(endPoint: string, args?: { [id: string]: any }) {
+        return new Promise<any>((resolve, reject) => {
+            const options = {
+                headers: new HttpHeaders({
+                    'Accept': 'application/json',
+                    'Content-Type': this.contentType,
+                }),
+                observe: null,
+            };
+            options.observe = 'response';
+            this.http.patch(this.buildAddress(endPoint), args, options).subscribe(
+                (res: HttpResponse<any>) => {
+                    resolve({ result: res.body })
+                },
+                (error: HttpErrorResponse) => reject(error)
+            );
+        });
+    }
+
+    callDelete(endPoint: string) {
+        return new Promise<any>((resolve, reject) => {
+            const options = {
+                headers: new HttpHeaders({
+                    'Accept': 'application/json',
+                    'Content-Type': this.contentType,
+                }),
+                observe: null,
+            };
+            options.observe = 'response';
+            this.http.delete(this.buildAddress(endPoint), options).subscribe(
+                (res: HttpResponse<any>) => {
+                    resolve({ result: res.body })
                 },
                 (error: HttpErrorResponse) => reject(error)
             );

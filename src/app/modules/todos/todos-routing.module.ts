@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TodosComponent } from './todos.component';
 import { AuthenticationGuardService } from '../../services/auth/authentication-guard.service';
-import { TodoListComponent } from 'src/app/modules/todos/list/todo-list.component';
+import { TodoListComponent } from './list/todo-list.component';
+import { TodoListResolver } from './list/todo-list.service';
 
 export const routes: Routes = [
     {
@@ -17,13 +18,16 @@ export const routes: Routes = [
             },
             {
                 path: 'list',
-                component: TodoListComponent
+                component: TodoListComponent,
+                resolve: {
+                    todos: TodoListResolver
+                }
             }, 
             {
                 path: '**',
                 redirectTo: 'list',
             }
-        ]
+        ],
     }
 ];
 

@@ -7,6 +7,8 @@ import { AuthenticationGuardService } from '../../services/auth/authentication-g
 import { TodosComponent } from './todos.component';
 import { TodosRoutingModule } from 'src/app/modules/todos/todos-routing.module';
 import { TodoListComponent } from 'src/app/modules/todos/list/todo-list.component';
+import { RouterModule } from '@angular/router'; 
+import { TodoListResolver, TodoListService } from './list/todo-list.service';
 
 @NgModule({
     declarations: [TodosComponent, TodoListComponent], 
@@ -14,11 +16,14 @@ import { TodoListComponent } from 'src/app/modules/todos/list/todo-list.componen
         TodosRoutingModule,
         AppBootstrapImportsModule,
         FormsModule,
-        CommonModule
+        CommonModule,
+        RouterModule
     ], 
     providers: [
         AuthenticationService,
-        AuthenticationGuardService
+        AuthenticationGuardService,
+        TodoListResolver,
+        TodoListService
     ], schemas: [
         NO_ERRORS_SCHEMA,
         CUSTOM_ELEMENTS_SCHEMA,

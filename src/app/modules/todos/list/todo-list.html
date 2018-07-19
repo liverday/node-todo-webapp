@@ -1,19 +1,40 @@
 <div class="container">
 
-    <div class="fill todo-list-container padding-h padding-v">
+    <div class="fill todo-list-container padding-h padding-v-top">
         <h3 class="heading">What to do next?</h3>
-        <form #todoForm="ngForm" (ngSubmit)="onSubmit(todoForm)" >
+        <form #todoForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(todoForm)">
             <div class="form-group">
-                <input type="text" class="form-control" [required]="true" name="todo" [(ngModel)]="todo" placeholder="Type a todo">
+                <div class="input-group">
+                    <input type="text" class="form-control" [required]="true" name="todo" [(ngModel)]="todo" placeholder="Type a todo">
+                    <div class="input-group-btn" *ngIf="todo">
+                        <button type="submit" class="submit-todo-button">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
+
         </form>
+        <ul class="todo-list">
+            <li *ngFor="let todo of todos" class="todo-item padding-v-slim">
+                <div class="todo-text">
+                    <span class="todo-text-span">{{todo.text}}</span>
+                    <span class="control-trash">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    <span class="control-check padding-h">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+            </li>
+        </ul>
     </div>
     <div class="divider"></div>
     <div class="controls padding-v">
-            <ul class="nav padding-h justify-content-center">
-                <li class="nav-item" (click)="setLinkActive(link)" *ngFor="let link of filterLinks" >
-                    <a class="nav-link" [ngClass]="{'active': link.id == activeLink }">{{ link.label }}</a>
-                </li>
-            </ul>
-        </div>
+        <ul class="nav padding-h justify-content-center">
+            <li class="nav-item" (click)="setLinkActive(link)" *ngFor="let link of filterLinks">
+                <a class="nav-link" [ngClass]="{'active': link.id == activeLink }">{{ link.label }}</a>
+            </li>
+        </ul>
+    </div>
 </div>
