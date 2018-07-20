@@ -23,7 +23,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss", "src/assets/theme/theme.scss"
+              "src/styles.scss", "src/assets/theme/theme.scss",
+              "node_modules/ng-busy/src/style/busy.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },

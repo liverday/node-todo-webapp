@@ -1,10 +1,12 @@
 @import '~src/assets/variables';
-@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
 
-$theme-colors: (
-    "primary": lighten($base-bg-color, 10%)
-);
-
+$primary: lighten($base-bg-color, 10%);
+$theme-colors: map-merge(
+  $theme-colors,
+  (primary: $primary)
+ );
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 $font-base: 'Roboto';
 $font-family-sans-serif: $font-base, 'sans-serif' !default;
@@ -12,7 +14,24 @@ $font-family-serif: $font-base, 'serif' !default;
 $font-family-monospace: $font-base, 'mono' !default;
 $font-family-base: $font-base;
 
+.alert-custom-danger {
+    background-color: darken($base-bg-color-3, 5%) !important;
+    color: lighten($base-white, 10%) !important;
+    margin: 0;
+    & button {
+        border: none;
+        padding-top: 10px !important;
+        text-shadow: none !important;
+        outline: none;
+        &:hover {
+            color: lighten($base-bg-color-3, 10%) !important;
+        }
+        & span {
+            vertical-align: text-top;       
+        }
+    }
+}
 
 
-
+@import '~bootstrap/scss/bootstrap';
 

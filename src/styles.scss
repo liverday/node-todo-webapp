@@ -13,6 +13,10 @@
     margin-right: $base-margin;
 }
 
+.no-margin {
+    margin: 0;
+}
+
 .padding-v {
     padding-top: $base-margin;
     padding-bottom: $base-margin;
@@ -21,8 +25,6 @@
 .padding-v-top {
     padding-top: $base-margin;
 }
-
-
 
 .padding-v-slim {
     padding-top: $base-margin / 2;

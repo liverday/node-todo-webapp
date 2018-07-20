@@ -11,7 +11,7 @@ export class HttpUtils {
         return `${this.endPoint}/${method}`;
     }
 
-    callPost(endPoint: string, args?: { [id: string]: any }) {
+    protected callPost(endPoint: string, args?: { [id: string]: any }) {
         return new Promise<any>((resolve, reject) => {
             const options = {
                 headers: new HttpHeaders({
@@ -33,7 +33,7 @@ export class HttpUtils {
         });
     }
 
-    callGet(endPoint: string) {
+    protected callGet(endPoint: string) {
         return new Promise<any>((resolve, reject) => {
             const options = {
                 headers: new HttpHeaders({
@@ -52,7 +52,7 @@ export class HttpUtils {
         });
     }
 
-    callPatch(endPoint: string, args?: { [id: string]: any }) {
+    protected callPatch(endPoint: string, args?: { [id: string]: any }) {
         return new Promise<any>((resolve, reject) => {
             const options = {
                 headers: new HttpHeaders({
@@ -71,7 +71,7 @@ export class HttpUtils {
         });
     }
 
-    callDelete(endPoint: string) {
+    protected callDelete(endPoint: string) {
         return new Promise<any>((resolve, reject) => {
             const options = {
                 headers: new HttpHeaders({

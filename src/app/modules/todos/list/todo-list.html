@@ -1,40 +1,49 @@
 <div class="container">
-
-    <div class="fill todo-list-container padding-h padding-v-top">
-        <h3 class="heading">What to do next?</h3>
-        <form #todoForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(todoForm)">
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" class="form-control" [required]="true" name="todo" [(ngModel)]="todo" placeholder="Type a todo">
-                    <div class="input-group-btn" *ngIf="todo">
-                        <button type="submit" class="submit-todo-button">
-                            <i class="fas fa-plus"></i>
-                        </button>
+    <div [ngBusy]="busy">
+        <div *ngIf="error" class="padding-v-top no-margin">
+            <alert type="custom-danger" [dismissible]="true" (onClosed)="onAlertClosed()">
+                <strong>Error! </strong>
+                <span [innerHTML]="error"></span>
+            </alert>
+        </div>
+        <div class="fill todo-list-container padding-h padding-v-top">
+            <h3 class="heading">What to do next?</h3>
+            <form #todoForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(todoForm)">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" autocomplete="off" [required]="true" name="todo" [(ngModel)]="todo" placeholder="Type a todo">
+                        <div class="input-group-btn" *ngIf="todo">
+                            <button type="submit" class="submit-todo-button">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </form>
-        <ul class="todo-list">
-            <li *ngFor="let todo of todos" class="todo-item padding-v-slim">
-                <div class="todo-text">
-                    <span class="todo-text-span">{{todo.text}}</span>
-                    <span class="control-trash">
-                        <i class="fas fa-trash"></i>
-                    </span>
-                    <span class="control-check padding-h">
-                        <i class="fas fa-check"></i>
-                    </span>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div class="divider"></div>
-    <div class="controls padding-v">
-        <ul class="nav padding-h justify-content-center">
-            <li class="nav-item" (click)="setLinkActive(link)" *ngFor="let link of filterLinks">
-                <a class="nav-link" [ngClass]="{'active': link.id == activeLink }">{{ link.label }}</a>
-            </li>
-        </ul>
+            </form>
+            <div #todoList>
+                <ul class="todo-list" *ngIf="todos" [ngClass]="{'overflow-scroll': todos.length > 6}">
+                    <li *ngFor="let todo of todos" class="todo-item padding-v-slim">
+                        <div class="todo-text">
+                            <span class="todo-text-span">{{todo.text}}</span>
+                            <span class="control-trash" (click)="deleteTodo(todo._id)">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                            <span class="control-check padding-h">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="divider padding-v-top"></div>
+        <div class="controls padding-v">
+            <ul class="nav padding-h justify-content-center">
+                <li class="nav-item" (click)="setLinkActive(link)" *ngFor="let link of filterLinks">
+                    <a class="nav-link" [ngClass]="{'active': link.id == activeLink }">{{ link.label }}</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

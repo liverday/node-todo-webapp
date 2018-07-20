@@ -25,7 +25,27 @@
 }
 
 .todo-list-container {
+    & ::-webkit-scrollbar {
+        width: 10px;
+    }
     
+    & ::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    & ::-webkit-scrollbar-track {
+        border-radius: 0.50em;
+    }
+
+    & ::-webkit-scrollbar-thumb {
+        background: $base-gray;
+        border-radius: 0.50em;
+        &:hover {
+            background: darken($base-gray, 5%);
+        }
+    }
+
+
     .heading {
         font-weight: bold;
         color: $base-white;
@@ -70,12 +90,19 @@
         }
     }
 
+    .overflow-scroll {
+        overflow-y: scroll;
+    }
+
     .todo-list {
         padding: 0;
         background-color: $base-white;
         border-radius: 4px;
         box-shadow: 3px 3px 20px rgba(0,0,0, 0.3);
+        max-height: 240px;
+        margin: 0 !important;
         .todo-item {
+            height: 40px;
             list-style: none;
             color: $base-input-color;
             border-bottom: thin solid rgba(0,0,0, 0.1);
@@ -85,7 +112,7 @@
             }
 
             &  .todo-text {
-                padding-left: 40px;
+                padding-left: 30px;
                 text-decoration: none;
                 display: flex;
                 flex-direction: row;
@@ -94,7 +121,7 @@
                 align-items: center;
                 & .todo-text-span {
                     flex: 1;
-                    text-align: center;
+                    text-align: start;
                 }
                 & .control-check {
                     & > i {
@@ -108,9 +135,14 @@
                     }
                 }
             }
-
-            
         }
+    }
+}
+
+.modal-todo-delete {
+
+    & .btn-primary {
+        background-color: map-get($theme-colors , 'primary')
     }
 }
 

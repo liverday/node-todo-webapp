@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AppBootstrapImportsModule } from '../../app-bootstrap-imports.module';
+import { AppImportsModule } from '../../app-imports.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
@@ -10,7 +10,7 @@ import { DoLoginComponent } from './do-login/do-login.component';
 
 @NgModule({
     imports: [
-        AppBootstrapImportsModule,
+        AppImportsModule,
         LoginRoutingModule,
         CommonModule,
         FormsModule

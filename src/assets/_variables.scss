@@ -1,6 +1,9 @@
 @import '~bootstrap/scss/bootstrap';
+$base-gray: $gray-400;
+$base-gray-darken: $gray-700;
+$base-gray-darker: $gray-800;
 
-$border-form-control: $gray-400;
+$border-form-control: $base-gray;
 $base-input-color: $gray-600;
 
 $base-green: $green;

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppBootstrapImportsModule } from './app-bootstrap-imports.module';
+import { AppImportsModule } from './app-imports.module';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -19,10 +19,13 @@ import { AuthInterceptor } from './utils/http-interceptor';
   ],
   imports: [
     BrowserModule,
-    AppBootstrapImportsModule,
+    AppImportsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    ToastrModule, 
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      preventDuplicates: true
+    }), 
     HttpClientModule
   ],
   providers: [

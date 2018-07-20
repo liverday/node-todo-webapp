@@ -18,6 +18,7 @@ import {
     TypeaheadModule,
     PopoverModule
 } from 'ngx-bootstrap';
+import { NgBusyModule } from 'ng-busy';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -42,7 +43,11 @@ import { NgModule } from '@angular/core';
         TimepickerModule.forRoot(),
         TooltipModule.forRoot(),
         TypeaheadModule.forRoot(),
-        PopoverModule.forRoot()
+        PopoverModule.forRoot(),
+        NgBusyModule.forRoot({
+            message: 'Carregando...',
+            minDuration: 300
+        })
     ], 
     exports: [
         AccordionModule,
@@ -62,8 +67,9 @@ import { NgModule } from '@angular/core';
         TimepickerModule,
         TooltipModule,
         TypeaheadModule,
-        PopoverModule
+        PopoverModule,
+        NgBusyModule
     ],
     providers: []
 })
-export class AppBootstrapImportsModule { }
+export class AppImportsModule { }

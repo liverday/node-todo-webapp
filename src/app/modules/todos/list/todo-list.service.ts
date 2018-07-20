@@ -10,14 +10,22 @@ export class TodoListService extends HttpUtils {
     super(http, 'https://thawing-lake-90175.herokuapp.com');
   }
 
-  getTodos(): Promise<Todo[]> {
+  getTodos(): Promise<DefaultResponse<Todo[]>> {
     return this.callGet('todos');
+  }
+
+  saveTodo(todo: Todo): Promise<DefaultResponse<Todo>> {
+    return this.callPost('todos', todo);
+  }
+
+  deleteTodo(id): Promise<DefaultResponse<Todo>> {
+    return this.callDelete(`todos/${id}`);
   }
 }
 
 
 @Injectable()
-export class TodoListResolver implements Resolve<Todo[]> {
+export class TodoListResolver implements Resolve<DefaultResponse<Todo[]>> {
 
   constructor(private service: TodoListService) {
 
@@ -26,7 +34,7 @@ export class TodoListResolver implements Resolve<Todo[]> {
   resolve(
     router: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Promise<Todo[]> {
+  ): Promise<DefaultResponse<Todo[]>> {
     return new Promise(async (resolve, reject) =>{
       try {
         const response = await this.service.getTodos();
@@ -46,8 +54,8 @@ export interface TodoFilter {
 }
 
 export interface Todo {
-  text: string;
-  completed: boolean;
-  completedAt: string;
-  _creator: string;
+  text?: string;
+  completed?: boolean;
+  completedAt?: string;
+  _creator?: string;
 }
