@@ -9,19 +9,21 @@ $base-input-color: $gray-600;
 $base-green: $green;
 $base-red: $red;
 
-$base-bg-color: #841a1a;
-$base-bg-color-2: #841919;
-$base-bg-color-3: #841515;
-$base-bg-color-4: #422323;
+$base-bg-color: #3e9be8;
+$base-bg-color-2: #2d92e5;
+$base-bg-color-3: #1672bd;
+$base-bg-color-4: #0168bc;
 
-$base-bg-rgb-color: rgb(132, 26, 26);
-$base-bg-rgb-color-2: rgb(132, 25, 25);
-$base-bg-rgb-color-3:rgb(132, 21, 21);
-$base-bg-rgb-color-4: rgb(66, 35, 35);
+$base-bg-rgb-color: rgb(62, 155, 232);
+$base-bg-rgb-color-2: rgb(45, 146, 229);
+$base-bg-rgb-color-3:rgb(22, 114, 189);
+$base-bg-rgb-color-4: rgb(1, 104, 188);
 
-$base-divider: darken($base-bg-color, 15%);
+$base-divider: darken($base-bg-color, 28%);
 
 $base-margin: 1em;
 $brand-background: #fff;
-$header-bg: #5b0000;
+$header-bg: darken($base-bg-color, 13%);
 $base-white: #f9f9f9;
+
+

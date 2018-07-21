@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TodoListService } from './todo-list.service';
+import { TodoListService, Todo } from './todo-list.service';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
@@ -16,21 +16,32 @@ export class TodoListComponent implements OnInit {
     activeLink;
     error;
     busy;
+    checkBoxToggleAll: boolean = false;
+    completedFilter;
+    @ViewChild('filteredTodos') filteredTodos;
+    checkedTodos: string[];
+    modalRef: BsModalRef;
 
     @ViewChild('todoList')
     todoList: ElementRef;
-    constructor(private route: ActivatedRoute, private router: Router, private service: TodoListService, private toastr: ToastrService) {
-        this.todos = route.snapshot.data.todos.result
+    constructor(private route: ActivatedRoute, private router: Router, private service: TodoListService, private toastr: ToastrService, private modalService: BsModalService) {
+        this.activeLink = this.filterLinks.find((item) => item.label == 'All');
+        this.completedFilter = this.activeLink.completedFilter;        
+        this.todos = route.snapshot.data.todos.result;
     }
 
     filterLinks = [
-        { label: 'Active', id: 1 },
-        { label: 'Completed', id: 2 },
-        { label: 'All', id: 3 },
+        { label: 'Active', id: 1, completedFilter: false },
+        { label: 'Completed', id: 2, completedFilter: true, },
+        { label: 'All', id: 3, completedFilter: null },
     ]
 
+    
+
     ngOnInit() {
+
     }
+
 
     async onSubmit(form) {
         if (!form.valid) {
@@ -45,17 +56,14 @@ export class TodoListComponent implements OnInit {
                 if (saveResponse.result) {
                     this.toastr.success('Todo saved! Reloading', 'Success!');
                 }
-                const reloadResponse = await this.service.getTodos();
-                if (reloadResponse) {
-                    this.todos = reloadResponse.result
-                }
+                await this.reloadTodos();
                 this.todo = null;        
                 resolve();
             } catch (e) {
                 console.error(e);
                 reject();
             }
-        }).then(() => this.scrollToBottom()); 
+        }); 
         
     }
     
@@ -64,7 +72,8 @@ export class TodoListComponent implements OnInit {
     }
 
     setLinkActive = (event) => {
-        this.activeLink = event.id;
+        this.activeLink = event;
+        this.completedFilter = this.activeLink.completedFilter
     }
 
     scrollToBottom() {
@@ -80,10 +89,7 @@ export class TodoListComponent implements OnInit {
                     this.toastr.success('Todo Deleted! Reloading', 'Success!');
                 }
 
-                const reloadResponse = await this.service.getTodos();
-                if (reloadResponse) {
-                    this.todos = reloadResponse.result;
-                }
+                await this.reloadTodos();
 
                 resolve();
             } catch (e) {
@@ -92,4 +98,45 @@ export class TodoListComponent implements OnInit {
             }
         });
     }
+
+    completeTodo(todo: Todo) {
+        todo.completed = true;
+        this.busy = new Promise(async(resolve, reject) => {
+            try {
+                const updateResponse = await this.service.updateTodo(todo);
+
+                if (updateResponse) {
+                    this.toastr.success('Todo completed! Reloading', 'Success!');
+                }
+
+                await this.reloadTodos();
+                resolve();
+            } catch (e) {
+                reject();
+            }
+        })
+    }
+
+
+    async reloadTodos() {
+        const response = await this.service.getTodos();
+        if (response) {
+            this.todos = response.result;
+        }
+    }
+
+    toggleAll = (event) => {
+        console.log(this.filteredTodos);
+        this.todos.forEach(todo => todo.checked = event);
+    }
+
+    storeCheckedAndOpenModal(template) {
+        this.checkedTodos = this.todos.filter(item => item.checked == true);
+        this.openModal(template);
+    }
+
+    openModal(template) {
+        this.modalRef = this.modalService.show(template);
+    }
+    
 }

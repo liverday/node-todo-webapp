@@ -13,18 +13,20 @@
         font-size: 1em;
         color: $base-white;
         &:hover {
-            color: darken($base-bg-color, 10%);
+            color: $header-bg;
         }
     }
     .active {
-        border: 1px solid lighten($base-bg-color, 10%);
+        transition: 0.2s;
+        border-bottom: 1px solid lighten($base-bg-color, 10%);
+        box-shadow: 0 3px 3px -5px rgba(0, 0, 0, 0.5);
         &:hover {
             color: $base-white;
         }
     }
 }
 
-.todo-list-container {
+.todo-container {
     & ::-webkit-scrollbar {
         width: 10px;
     }
@@ -49,12 +51,13 @@
     .heading {
         font-weight: bold;
         color: $base-white;
+        text-shadow: 3px 3px 15px rgba(0,0,0, 0.4);
     }
 
     & form { 
         position: relative;
         .form-control {
-            padding-left: 30px;
+            padding-left: 35px;
             display: inline;
             border-right: none;
             &:focus {
@@ -94,55 +97,199 @@
         overflow-y: scroll;
     }
 
-    .todo-list {
+    .todo-list-header {
         padding: 0;
-        background-color: $base-white;
-        border-radius: 4px;
-        box-shadow: 3px 3px 20px rgba(0,0,0, 0.3);
-        max-height: 240px;
-        margin: 0 !important;
-        .todo-item {
-            height: 40px;
+        margin-bottom: 0;
+        
+        & .todo-header {
+            height: 45px;
             list-style: none;
-            color: $base-input-color;
-            border-bottom: thin solid rgba(0,0,0, 0.1);
-            &:hover {
-                color: black;
-                transition: 0.1s ease-in;
-            }
-
-            &  .todo-text {
-                padding-left: 30px;
+            background-color: darken($base-bg-color, 8%);
+            border-radius: 5px 5px 0 0;
+            & .todo-header-text {
                 text-decoration: none;
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: flex-start;
                 align-items: center;
-                & .todo-text-span {
+                height: inherit;
+                & .todo-header-checkbox {
+                    position: relative;
+                    margin-left: 15px;
+                    margin-right: 20px;
+                    cursor: pointer;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+    
+                    & input {
+                        position: absolute;
+                        opacity: 0;
+                        cursor: pointer;
+                        width: 16px;
+    
+                        &:checked ~ .checkmark-header {
+                            transition: 0.2s ease-out;
+                            &:after {
+                                color: $base-white;
+                                opacity: 1;
+                            }
+                        }
+                    }
+    
+                    & .checkmark-header {
+                        position: absolute;
+                        left: -5px;
+                        top: -5px;
+                        width: 16px;
+                        height: 16px;
+                        outline: 2px solid $base-white;
+                        transition: 0.2s ease-in;
+                        &:after {
+                            content: '';
+                            position: absolute;
+                            opacity: 0;
+                            width: 7px;
+                            height: 10px;
+                            top: 2px;
+                            left: 5px;
+                            border: solid $base-white;
+                            border-width: 0 3px 3px 0;
+                            -webkit-transform: rotate(45deg);
+                            -ms-transform: rotate(45deg);
+                            transform: rotate(45deg);
+                        }
+                    }
+                }
+
+                & .todo-text-header-span {
                     flex: 1;
                     text-align: start;
+                    color: $base-white;
+                    font-weight: bold;
+                    font-size: 17px;
                 }
-                & .control-check {
+
+                & .control-header-check {
+                    padding-right: 26px;
+                    padding-left: 1em;
+                    font-size: 17px;
                     & > i {
-                        color: $base-green;
+                        color: $base-white;
+                        font-weight: bold
                     } 
                 }
 
-                & .control-trash {
+                & .control-header-trash {
+                    font-size: 17px;
                     & > i {
-                        color: $base-red;
+                        color: $base-white;
+                        font-weight: bold;
+                    }
+                }
+            }
+             
+        }
+    }
+    .todo-list-container { 
+        min-height: 240px;
+        .todo-list {
+            padding: 0;
+            background-color: $base-white;
+            border-radius: 0 0 4px 4px;
+            max-height: 240px;
+            box-shadow: 3px 3px 20px rgba(0,0,0, 0.3);
+            margin: 0 !important;
+
+
+
+            & .todo-item {
+                height: 40px;
+                list-style: none;
+                color: $base-input-color;
+                border-bottom: thin solid rgba(0,0,0, 0.1);
+                &:hover {
+                    color: black;
+                    transition: 0.1s ease-in;
+                }
+
+                &  .todo-text {                
+                    text-decoration: none;
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: flex-start;
+                    align-items: center;
+
+                    & .todo-checkbox {
+                        position: relative;
+                        margin-left: 15px;
+                        margin-right: 20px;
+                        cursor: pointer;
+                        -webkit-user-select: none;
+                        -moz-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
+
+                        & input {
+                            position: absolute;
+                            opacity: 0;
+                            cursor: pointer;
+                            width: 15px;
+
+                            &:checked ~ .checkmark {
+                                background-color: lighten($base-bg-color, 15%);
+                                transition: 0.2s ease-out;
+                                &:after {
+                                    color: $base-white;
+                                    opacity: 1;
+                                }
+                            }
+                        }
+
+                        & .checkmark {
+                            position: absolute;
+                            left: -5px;
+                            top: -4px;
+                            width: 15px;
+                            height: 15px;
+                            background-color: $base-gray;
+                            transition: 0.2s ease-in;
+                            &:after {
+                                content: '';
+                                position: absolute;
+                                opacity: 0;
+                                width: 7px;
+                                height: 10px;
+                                top: 1px;
+                                left: 4px;
+                                border: solid white;
+                                border-width: 0 3px 3px 0;
+                                -webkit-transform: rotate(45deg);
+                                -ms-transform: rotate(45deg);
+                                transform: rotate(45deg);
+                            }
+                        }
+                    }
+                    & .todo-text-span {
+                        flex: 1;
+                        text-align: start;
+                    }
+                    & .control-check {
+                        & > i {
+                            color: $base-green;
+                        } 
+                    }
+
+                    & .control-trash {
+                        & > i {
+                            color: $base-red;
+                        }
                     }
                 }
             }
         }
     }
 }
-
-.modal-todo-delete {
-
-    & .btn-primary {
-        background-color: map-get($theme-colors , 'primary')
-    }
-}
-

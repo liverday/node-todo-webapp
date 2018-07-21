@@ -21,6 +21,10 @@ export class TodoListService extends HttpUtils {
   deleteTodo(id): Promise<DefaultResponse<Todo>> {
     return this.callDelete(`todos/${id}`);
   }
+
+  updateTodo(todo): Promise<DefaultResponse<Todo>> {
+    return this.callPatch(`todos/${todo._id}`, todo)
+  }
 }
 
 
@@ -58,4 +62,6 @@ export interface Todo {
   completed?: boolean;
   completedAt?: string;
   _creator?: string;
+  _id?: string;
+  checked?: boolean;
 }

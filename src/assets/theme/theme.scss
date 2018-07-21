@@ -1,11 +1,11 @@
-@import '~src/assets/variables';
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
+@import '~src/assets/variables';
 
-$primary: lighten($base-bg-color, 10%);
+$primary: darken($base-bg-color, 10%);
 $theme-colors: map-merge(
   $theme-colors,
-  (primary: $primary)
+  ("primary": $primary)
  );
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 $font-base: 'Roboto';
@@ -32,6 +32,6 @@ $font-family-base: $font-base;
     }
 }
 
-
+@import '~bootstrap/scss/mixins';
 @import '~bootstrap/scss/bootstrap';
 

@@ -52,9 +52,9 @@
     position: relative;
     height: calc(100vh);
     background: $base-bg-color; /* Old browsers */
-    background: -moz-linear-gradient(top, $base-bg-color 0%,  $base-bg-color-2 50%, $base-bg-color-3 53%,  $base-bg-color-4 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top, $base-bg-color 0%, $base-bg-color-2 50%, $base-bg-color-3 53%, $base-bg-color-4 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom, $base-bg-color 0%, $base-bg-color-2 50%, $base-bg-color-3 53%, $base-bg-color-4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: -moz-linear-gradient(top, $base-bg-color 0%,  $base-bg-color-2 50%, $base-bg-color-3 90%,  $base-bg-color-4 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, $base-bg-color 0%, $base-bg-color-2 50%, $base-bg-color-3 90%, $base-bg-color-4 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, $base-bg-color 0%, $base-bg-color-2 50%, $base-bg-color-3 90%, $base-bg-color-4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$base-bg-color, endColorstr=$base-bg-color-4, GradientType=0 ); /* IE6-9 */
 }
 

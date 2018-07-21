@@ -10,9 +10,11 @@ import { TodoListComponent } from 'src/app/modules/todos/list/todo-list.componen
 import { RouterModule } from '@angular/router'; 
 import { TodoListResolver, TodoListService } from './list/todo-list.service';
 import { BsModalService } from 'ngx-bootstrap';
+import { FilterTodoStatusPipe } from '../../pipes/filter-todo-status.pipe'
+import { OrderByStatusPipe } from '../../pipes/order-by-todo-status.pipe'
 
 @NgModule({
-    declarations: [TodosComponent, TodoListComponent], 
+    declarations: [TodosComponent, TodoListComponent, FilterTodoStatusPipe, OrderByStatusPipe], 
     imports: [
         TodosRoutingModule,
         AppImportsModule,
@@ -24,7 +26,8 @@ import { BsModalService } from 'ngx-bootstrap';
         AuthenticationService,
         AuthenticationGuardService,
         TodoListResolver,
-        TodoListService
+        TodoListService,
+        BsModalService
     ], schemas: [
         NO_ERRORS_SCHEMA,
         CUSTOM_ELEMENTS_SCHEMA,
