@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TodoListService, Todo } from './todo-list.service';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import * as moment from 'moment';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class TodoListComponent implements OnInit {
     completedFilter;
     checkedTodos: Todo[];
     modalRef: BsModalRef;
-
+    todoDetailed;
     @ViewChild('todoList')
     todoList: ElementRef;
     constructor(private route: ActivatedRoute, private router: Router, private service: TodoListService, private toastr: ToastrService,
@@ -138,6 +139,15 @@ export class TodoListComponent implements OnInit {
         this.modalRef = this.modalService.show(template);
     }
 
+    openDetailModal(template, todo) {
+        this.todoDetailed = {
+            text: todo.text,
+            completed: todo.completed,
+            completedAt: moment(todo.completedAt).format('YYYY/MM/DD hh:mm:ss a')
+        };
+        this.modalRef = this.modalService.show(template);
+    }
+
     deleteCheckedTodos() {
         this.closeModal();
         this.busy = new Promise(async (resolve, reject) => {
@@ -202,4 +212,35 @@ export class TodoListComponent implements OnInit {
         this.toggleAll(false);
     }
 
+
+    setEditable(todo) {
+        todo.cachedText = todo.text;
+        todo.editable = true;
+    }
+
+    cancelEdit(todo) {
+        todo.text = todo.cachedText;
+        todo.editable = false;
+    }
+
+    async onEditableSubmit(form, todo) {
+        if (!form.valid) {
+            this.error = 'Todo is required';
+            return;
+        }
+        try {
+            todo.editing = true;
+            this.error = null;
+            const updateResponse = await this.service.updateTodo(todo);
+
+            if (updateResponse) {
+                this.toastr.success('Todo updated!', 'Success!');
+            }
+        } catch (e) {
+            this.toastr.error(`We can't update todo! Try again with new values`, 'Error!');
+            console.error(e);
+        }
+
+        todo.editable = false;
+    }
 }

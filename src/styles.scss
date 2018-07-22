@@ -40,6 +40,10 @@
     padding-left: $base-margin;
 }
 
+.padding-h-slim-left {
+    padding-left: $base-margin / 2;
+}
+
 .base-margin-v {
     margin-top: $base-margin;
     margin-bottom: $base-margin;

@@ -64,4 +64,7 @@ export interface Todo {
   _creator?: string;
   _id?: string;
   checked?: boolean;
+  editable?: boolean;
+  editign?: boolean;
+  cachedText?: string;
 }

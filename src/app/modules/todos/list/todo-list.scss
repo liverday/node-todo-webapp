@@ -64,7 +64,6 @@
         .form-control {
             padding-left: 35px;
             display: inline;
-            border-right: none;
             &:focus {
                 outline: none;
                 box-shadow: none !important ;
@@ -291,6 +290,14 @@
                     & .todo-text-span {
                         flex: 1;
                         text-align: start;
+
+                        & .form-control {
+                            line-height: 1 !important;
+                            padding-left: 10px;
+                            &:focus {
+                                border-right: 1px solid $base-gray !important;
+                            }
+                        }
                     }
                     & .control-check {
                         & > i {
@@ -301,6 +308,12 @@
                     & .control-trash {
                         & > i {
                             color: $base-red;
+                        }
+                    }
+
+                    & .control-edit {
+                        & > i {
+                            color: lighten($base-bg-color, 10%);
                         }
                     }
                 }

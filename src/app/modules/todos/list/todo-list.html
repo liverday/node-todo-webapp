@@ -43,20 +43,34 @@
                 <ul class="todo-list" *ngIf="todos" [ngClass]="{'overflow-scroll': todos.length > 6}">
                     <li *ngFor="let todo of (todos | orderByStatus: completedFilter) | filterTodoStatus: completedFilter as filteredTodos;" class="todo-item padding-v-slim">
                         <div class="todo-text" *ngIf="todo !== -1">
-                            <label class="todo-checkbox">
+                            <label class="todo-checkbox" *ngIf="!todo.editable">
                                 <input type="checkbox" [disabled]="todo.completed && !completedFilter" name="checkbox" [(ngModel)]="todo.checked" [checked]="todo.checked"
                                     class="custom-checkbox" />
                                 <span class="checkmark"></span>
                             </label>
-                            <span class="todo-text-span">{{todo.text}} </span>
-                            <span class="control-trash" [ngClass]="{'padding-h': completedFilter}" *ngIf="!todo.completed || (todo.completed && activeLink.completedFilter)"
+                            <span class="todo-text-span" [ngClass]="{'padding-h-slim-left': todo.editable}" (dblclick)="openDetailModal(todoDetail, todo)">
+                                <span *ngIf="!todo.editable">{{todo.text}}</span>
+                                <form class="form-horizontal" #todoEditableForm="ngForm" (ngSubmit)="onEditableSubmit(todoEditableForm, todo)" *ngIf="todo.editable">
+                                    <input type="text" class="form-control form-control-sm" [disabled]="todo.editing" autocomplete="off" required name="text"
+                                        [(ngModel)]="todo.text" placeholder="Type a todo">
+                                </form>
+                            </span>
+
+                            <span class="control-trash padding-h" tooltip="Delete todo" *ngIf="(!todo.completed || (todo.completed && activeLink.completedFilter)) && !todo.editable"
                                 (click)="deleteTodo(todo._id)">
                                 <i class="fas fa-trash"></i>
                             </span>
-                            <span class="control-validation-check padding-h" *ngIf="todo.completed && !activeLink.completedFilter" tooltip="Completed">
+                            <span class="control-cancel" class="padding-h" tooltip="Cancel edit" *ngIf="todo.editable" (click)="cancelEdit(todo)">
+                                <i class="fas fa-times"></i>
+                            </span>
+                            <span class="control-validation-check padding-h" *ngIf="(todo.completed && !activeLink.completedFilter) && !todo.editable"
+                                tooltip="Completed">
                                 <i class="far fa-check-circle"></i>
                             </span>
-                            <span class="control-check padding-h" *ngIf="!todo.completed" (click)="completeTodo(todo)">
+                            <span class="control-edit padding" tooltip="Edit todo" *ngIf="!todo.completed && !todo.editable" (click)="setEditable(todo)">
+                                <i class="fas fa-pen"></i>
+                            </span>
+                            <span class="control-check padding-h" tooltip="Complete todo" *ngIf="!todo.completed && !todo.editable" (click)="completeTodo(todo)">
                                 <i class="fas fa-check"></i>
                             </span>
                         </div>
@@ -111,6 +125,26 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" (click)="closeModal(true)">Cancel</button>
                 <button type="button" class="btn btn-primary" (click)="completeCheckedTodos()">Confirm</button>
+            </div>
+        </ng-template>
+
+        <ng-template #todoDetail>
+            <div class="modal-header">
+                <div class="modal-title">
+                    <h4>Detail</h4>
+                </div>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Text:</strong> {{todoDetailed.text}}
+                <br />
+                <strong>Completed: </strong> {{todoDetailed.completed ? 'Yes' : 'No'}}.
+                <span *ngIf="todoDetailed.completed">
+                    <br />
+                    <strong>Completed At: </strong> {{todoDetailed.completedAt}}
+                </span>
             </div>
         </ng-template>
     </div>
