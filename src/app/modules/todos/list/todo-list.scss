@@ -8,6 +8,11 @@
     opacity: 0.3;
 }
 
+.tooltip {
+    position: fixed !important;
+    z-index: 1151 !important;
+}
+
 .controls { 
     & .nav-link {
         font-size: 1em;
@@ -95,6 +100,11 @@
 
     .overflow-scroll {
         overflow-y: scroll;
+        overflow: auto;
+    }
+
+    .overflow-hidden {
+        overflow: hidden;
     }
 
     .todo-list-header {
@@ -173,7 +183,6 @@
                 }
 
                 & .control-header-check {
-                    padding-right: 26px;
                     padding-left: 1em;
                     font-size: 17px;
                     & > i {
@@ -247,6 +256,10 @@
                                     opacity: 1;
                                 }
                             }
+
+                            &:disabled ~  .checkmark {
+                                background-color: $base-gray;
+                            }
                         }
 
                         & .checkmark {
@@ -255,7 +268,7 @@
                             top: -4px;
                             width: 15px;
                             height: 15px;
-                            background-color: $base-gray;
+                            background-color: $base-gray-darken;
                             transition: 0.2s ease-in;
                             &:after {
                                 content: '';
@@ -271,6 +284,8 @@
                                 -ms-transform: rotate(45deg);
                                 transform: rotate(45deg);
                             }
+
+
                         }
                     }
                     & .todo-text-span {
@@ -287,6 +302,12 @@
                         & > i {
                             color: $base-red;
                         }
+                    }
+                }
+
+                & .empty-todo-text {
+                    & .todo-text-span {
+                        text-align: center;
                     }
                 }
             }

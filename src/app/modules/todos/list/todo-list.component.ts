@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TodoListService, Todo } from './todo-list.service';
 import { ToastrService } from 'ngx-toastr';
@@ -10,23 +10,23 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
     styleUrls: ['./todo-list.scss'],
     templateUrl: './todo-list.html'
 })
-export class TodoListComponent implements OnInit { 
+export class TodoListComponent implements OnInit {
     todo;
-    todos;
+    todos: Todo[];
     activeLink;
     error;
     busy;
     checkBoxToggleAll: boolean = false;
     completedFilter;
-    @ViewChild('filteredTodos') filteredTodos;
-    checkedTodos: string[];
+    checkedTodos: Todo[];
     modalRef: BsModalRef;
 
     @ViewChild('todoList')
     todoList: ElementRef;
-    constructor(private route: ActivatedRoute, private router: Router, private service: TodoListService, private toastr: ToastrService, private modalService: BsModalService) {
+    constructor(private route: ActivatedRoute, private router: Router, private service: TodoListService, private toastr: ToastrService,
+        private modalService: BsModalService, private cd: ChangeDetectorRef) {
         this.activeLink = this.filterLinks.find((item) => item.label == 'All');
-        this.completedFilter = this.activeLink.completedFilter;        
+        this.completedFilter = this.activeLink.completedFilter;
         this.todos = route.snapshot.data.todos.result;
     }
 
@@ -36,37 +36,34 @@ export class TodoListComponent implements OnInit {
         { label: 'All', id: 3, completedFilter: null },
     ]
 
-    
-
     ngOnInit() {
 
     }
-
 
     async onSubmit(form) {
         if (!form.valid) {
             this.error = 'Todo is required';
             return;
         }
-        
+
         this.error = null;
-        this.busy = new Promise(async(resolve, reject) => {
+        this.busy = new Promise(async (resolve, reject) => {
             try {
-                const saveResponse = await this.service.saveTodo({text: this.todo}); 
+                const saveResponse = await this.service.saveTodo({ text: this.todo });
                 if (saveResponse.result) {
                     this.toastr.success('Todo saved! Reloading', 'Success!');
                 }
                 await this.reloadTodos();
-                this.todo = null;        
+                this.todo = null;
                 resolve();
             } catch (e) {
                 console.error(e);
                 reject();
             }
-        }); 
-        
+        });
+
     }
-    
+
     onAlertClosed() {
         this.error = null;
     }
@@ -76,13 +73,8 @@ export class TodoListComponent implements OnInit {
         this.completedFilter = this.activeLink.completedFilter
     }
 
-    scrollToBottom() {
-        const lastChild = this.todoList.nativeElement.querySelector('ul li:last-child');
-        this.todoList.nativeElement.querySelector('ul').scrollTop = this.todos.length * 40 + (lastChild.scrollHeight - lastChild.offsetHeight);
-    }
-
     deleteTodo(id) {
-        this.busy = new Promise(async(resolve, reject) => {
+        this.busy = new Promise(async (resolve, reject) => {
             try {
                 const delResponse = await this.service.deleteTodo(id);
                 if (delResponse.result) {
@@ -101,7 +93,7 @@ export class TodoListComponent implements OnInit {
 
     completeTodo(todo: Todo) {
         todo.completed = true;
-        this.busy = new Promise(async(resolve, reject) => {
+        this.busy = new Promise(async (resolve, reject) => {
             try {
                 const updateResponse = await this.service.updateTodo(todo);
 
@@ -126,8 +118,15 @@ export class TodoListComponent implements OnInit {
     }
 
     toggleAll = (event) => {
-        console.log(this.filteredTodos);
-        this.todos.forEach(todo => todo.checked = event);
+        this.todos.filter(item => {
+            if (this.completedFilter == null) {
+                return item;
+            } else {
+                return item.completed == this.completedFilter
+            }
+        }).forEach(todo => {
+            todo.checked = event;
+        });
     }
 
     storeCheckedAndOpenModal(template) {
@@ -138,5 +137,69 @@ export class TodoListComponent implements OnInit {
     openModal(template) {
         this.modalRef = this.modalService.show(template);
     }
-    
+
+    deleteCheckedTodos() {
+        this.closeModal();
+        this.busy = new Promise(async (resolve, reject) => {
+            try {
+                if (!this.checkedTodos.length) {
+                    throw ('empty_list');
+                }
+
+                await Promise.all(
+                    this.checkedTodos.map(item => this.service.deleteTodo(item._id))
+                );
+
+                this.toastr.success('Todos deleted! Reloading...', 'Success!');
+                await this.reloadTodos();
+                resolve();
+            } catch (e) {
+                if (e == 'empty_list') {
+                    this.toastr.error('Delete list is empty! Try again', 'Error');
+                }
+                reject();
+            }
+        }).then(() => this.invalidateChecked());
+    }
+
+    completeCheckedTodos() {
+        this.closeModal();
+        this.busy = new Promise(async (resolve, reject) => {
+            try {
+                if (!this.checkedTodos.length) {
+                    throw ('empty_list');
+                }
+
+                await Promise.all(
+                    this.checkedTodos.map(item => {
+                        item.completed = true;
+                        return this.service.updateTodo(item);
+                    })
+                );
+
+                this.toastr.success('Todos completed! Reloading...', 'Success!');
+                await this.reloadTodos();
+                resolve();
+            } catch (e) {
+                if (e == 'empty_list') {
+                    this.toastr.error('Update list is empty! Try again', 'Error');
+                }
+                reject();
+            }
+        });
+    }
+
+    closeModal(invalidateChecked: boolean = false) {
+        this.modalRef.hide();
+        if (invalidateChecked) {
+            this.invalidateChecked();
+        }
+    }
+
+    invalidateChecked() {
+        this.checkedTodos = [];
+        this.checkBoxToggleAll = false;
+        this.toggleAll(false);
+    }
+
 }

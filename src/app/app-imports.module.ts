@@ -45,7 +45,7 @@ import { NgModule } from '@angular/core';
         TypeaheadModule.forRoot(),
         PopoverModule.forRoot(),
         NgBusyModule.forRoot({
-            message: 'Carregando...',
+            message: 'Loading...',
             minDuration: 300
         })
     ], 
