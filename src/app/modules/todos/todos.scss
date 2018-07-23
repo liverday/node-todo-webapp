@@ -4,8 +4,12 @@
     background-color: $header-bg;
     padding-top: $base-margin;
     padding-bottom: $base-margin;
+    flex-flow: row wrap;
     justify-content: center;
+    align-items: center;
+    position: relative;
     & h1 {
+        margin: 0 auto;
         color: lighten($base-white, 20%);
         font-weight: bold;
         text-shadow: 3px 5px 15px rgba(0,0,0, 0.5);
@@ -15,4 +19,17 @@
         font-weight: normal; 
         color: darken($base-white, 5%) !important;
     }
+
+    & .control-logout {
+        cursor: pointer;
+        position: absolute;
+        width: 150px;
+        right: 0;
+        top: 30%;
+        & h4 {
+        color: lighten($base-white, 20%);
+        vertical-align: middle;
+        text-shadow: 3px 5px 15px rgba(0,0,0, 0.5);
+       }
+    }   
 }

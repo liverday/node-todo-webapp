@@ -3,10 +3,10 @@
 @import '~src/assets/variables';
 
 $primary: darken($base-bg-color, 10%);
-$theme-colors: map-merge(
-  $theme-colors,
-  ("primary": $primary)
- );
+$theme-colors: (
+    "primary": $primary
+) !default;
+
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 $font-base: 'Roboto';
 $font-family-sans-serif: $font-base, 'sans-serif' !default;
@@ -15,7 +15,7 @@ $font-family-monospace: $font-base, 'mono' !default;
 $font-family-base: $font-base;
 
 .alert-custom-danger {
-    background-color: darken($base-bg-color-3, 5%) !important;
+    background-color: darken($base-red, 5%) !important;
     color: lighten($base-white, 10%) !important;
     margin: 0;
     & button {
@@ -24,7 +24,7 @@ $font-family-base: $font-base;
         text-shadow: none !important;
         outline: none;
         &:hover {
-            color: lighten($base-bg-color-3, 10%) !important;
+            color: lighten($base-red, 10%) !important;
         }
         & span {
             vertical-align: text-top;       
@@ -32,6 +32,5 @@ $font-family-base: $font-base;
     }
 }
 
-@import '~bootstrap/scss/mixins';
 @import '~bootstrap/scss/bootstrap';
 

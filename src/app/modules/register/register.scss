@@ -1,0 +1,64 @@
+@import '~src/assets/variables';
+
+.register-container {
+    position: absolute;
+    background-color: $brand-background;
+    top: 50%;
+    left: 50%;
+    margin: 0 auto;
+    transform: translate(-50%, -50%);
+    border: 1px thin black;
+    border-radius: 5px;
+    padding: 30px 60px;
+    box-shadow: 5px 5px 20px rgba(0,0,0, 0.5);
+
+    & h2 {
+        font-weight: bold;
+    }
+
+    & .register-form {
+        width: 450px;
+
+        & .email {
+            position: relative;
+            & .fa-envelope {
+                position: absolute;
+                z-index: 1;
+                color: $base-gray;
+                top: 27%;
+                left: 95%;
+                width: 15px;
+            }
+        }
+
+        & .password {
+            position: relative;
+
+            & .fa-lock {
+                position: absolute;
+                z-index: 1;
+                color: $base-gray;
+                top: 27%;
+                left: 95%;
+                width: 19px;
+            }
+        }
+
+        & .login-text-container {
+            & .login-text {
+            font-size: 15px;
+            color: $base-gray-darken;
+            
+                & a {
+                    text-decoration: none;
+                    cursor: pointer;
+                    color: darken($base-bg-color, 5%);
+    
+                    &:hover {
+                        color: darken($base-bg-color, 10%);
+                    }
+                }
+            }
+        }
+    }
+}   

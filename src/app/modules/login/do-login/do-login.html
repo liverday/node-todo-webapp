@@ -1,34 +1,37 @@
 <div class="login-form">
-    <alert *ngIf="error" type="danger">
+    <alert *ngIf="error" type="danger" [dismissible]="true">
         {{error}}
     </alert>
-    <form class="form-horizontal" #loginForm="ngForm" (ngSubmit)="onSubmit($event)">
+    <form class="form-horizontal" #loginForm="ngForm" (ngSubmit)="onSubmit($event, loginForm)">
         <fieldset [disabled]="state === 'loading'">
-            <div class="form-group">
-                <div class="input-group">
-                    <input class="form-control" name="username" type="text" [(ngModel)]="user.email" required="true" placeholder="Type an email" autofocus autocomplete="off">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="fa fa-envelope"></i>
-                        </span>
-                    </div>
-
+            <alert *ngIf="userEmail.errors && userEmail.errors.email && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                Email is not valid.
+            </alert>
+            <alert *ngIf="userPassword.errors && userPassword.errors.minlength && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                Minimun length of the password is 8;
+            </alert>
+            <div class="email">
+                <div class="form-group">
+                    <span class="fas fa-envelope"></span>
+                    <input class="form-control" name="username" email #userEmail="ngModel" type="email" [(ngModel)]="user.email" required="true" placeholder="Type an email"
+                        autofocus autocomplete="off">
                 </div>
             </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <input class="form-control" name="password" type="password" placeholder="Type a password" [(ngModel)]="user.password" required="true"
+            <div class="password">
+                <div class="form-group">
+                    <span class="fas fa-lock"></span>
+                    <input class="form-control" name="password" #userPassword="ngModel" type="password" [minlength]="8" placeholder="Type a password" [(ngModel)]="user.password" required="true"
                         autofocus autocomplete="off">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="fa fa-asterisk"></i>
-                        </span>
-                    </div>
-
                 </div>
             </div>
             <div class="form-group">
                 <button class="btn btn-primary btn-block">Login</button>
+                <div class="register-text-container padding-v">
+                    <span class="register-text">
+                        Don't have an account yet? Register now
+                        <a routerLink="/register">here!</a>
+                    </span>
+                </div>
             </div>
         </fieldset>
     </form>

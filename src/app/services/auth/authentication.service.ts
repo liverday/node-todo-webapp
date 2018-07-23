@@ -15,7 +15,7 @@ export class AuthenticationService extends HttpUtils {
     public authenticate(email: string, password: string): Promise<boolean> {
         return new Promise<boolean>(async (resolve, reject) => {
             try {
-                const result = await this.callPost('users/login', {email, password});
+                const result = await this.callPost('users/login', { email, password });
                 localStorage.setItem('authToken', result.headers.get('x-auth'));
                 resolve();
             } catch (e) {
@@ -23,4 +23,32 @@ export class AuthenticationService extends HttpUtils {
             }
         });
     }
+
+    public register(email: string, password: string): Promise<boolean> {
+        return new Promise<boolean>(async (resolve, reject) => {
+            try {
+                const result = await this.callPost('users', { email, password });
+                localStorage.setItem('authToken', result.headers.get('x-auth'));
+                resolve(result);
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    public logout(): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try { 
+                await this.callDelete('users/me/token');
+                resolve();
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+}
+
+export interface IUser {
+    email?: string;
+    password?: string;
 }

@@ -55,8 +55,10 @@
                                         [(ngModel)]="todo.text" placeholder="Type a todo">
                                 </form>
                             </span>
-
-                            <span class="control-trash padding-h" tooltip="Delete todo" *ngIf="(!todo.completed || (todo.completed && activeLink.completedFilter)) && !todo.editable"
+                            <span class="control-edit padding-h" tooltip="Edit todo" *ngIf="!todo.completed && !todo.editable" (click)="setEditable(todo)">
+                                    <i class="fas fa-pen"></i>
+                                </span>
+                            <span class="control-trash" tooltip="Delete todo" [ngClass]="{'padding-h': completedFilter}" *ngIf="(!todo.completed || (todo.completed && activeLink.completedFilter)) && !todo.editable"
                                 (click)="deleteTodo(todo._id)">
                                 <i class="fas fa-trash"></i>
                             </span>
@@ -67,9 +69,7 @@
                                 tooltip="Completed">
                                 <i class="far fa-check-circle"></i>
                             </span>
-                            <span class="control-edit padding" tooltip="Edit todo" *ngIf="!todo.completed && !todo.editable" (click)="setEditable(todo)">
-                                <i class="fas fa-pen"></i>
-                            </span>
+
                             <span class="control-check padding-h" tooltip="Complete todo" *ngIf="!todo.completed && !todo.editable" (click)="completeTodo(todo)">
                                 <i class="fas fa-check"></i>
                             </span>

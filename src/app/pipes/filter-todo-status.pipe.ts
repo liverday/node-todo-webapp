@@ -12,7 +12,12 @@ export class FilterTodoStatusPipe implements PipeTransform {
         return response;
       } else return [-1];
     }
-    else return items;
+    else {
+      if ( items.length > 0 ) {
+        return items;
+      }
+      else return [-1];
+    };
   }
 
 }

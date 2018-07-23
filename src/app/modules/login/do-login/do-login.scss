@@ -1,3 +1,46 @@
+@import '~src/assets/variables';
+
 .login-form {
     width: 450px;
+
+    & .password {
+        position: relative;
+        & .fa-lock {
+            position: absolute;
+            top: 25%;
+            left: 95%;
+            z-index: 1;
+            color: $base-gray;
+            width: 19px;
+        }
+    }
+
+    & .email {
+        position: relative;
+        & .fa-envelope {
+            position: absolute;
+            top: 25%;
+            left: 95%;
+            z-index: 1;
+            color: $base-gray;
+            width: 15px;
+        }
+    }
+
+    & .register-text-container {
+        & .register-text {
+        font-size: 15px;
+        color: $base-gray-darken;
+        
+            & a {
+                text-decoration: none;
+                cursor: pointer;
+                color: darken($base-bg-color, 5%);
+
+                &:hover {
+                    color: darken($base-bg-color, 10%);
+                }
+            }
+        }
+    }
 }

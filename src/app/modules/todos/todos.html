@@ -1,6 +1,13 @@
 <div class="container-fluid main-view">
     <div class="row header-view">
-        <h1>Todos <i class="vertical-middle far fa-check-square"></i></h1>
+        <h1>Todos
+            <i class="vertical-middle far fa-check-square"></i>
+        </h1>
+        <span class="control-logout padding-h" (click)="logout()">
+            <h4>Logout
+                <i class="fas fa-sign-out-alt"></i>
+            </h4>
+        </span>
     </div>
     <div>
         <router-outlet></router-outlet>
