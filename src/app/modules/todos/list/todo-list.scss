@@ -290,8 +290,8 @@
                     & .todo-text-span {
                         flex: 1;
                         text-align: start;
-
                         & .form-control {
+                            margin-top: -20px;
                             line-height: 1 !important;
                             padding-left: 10px;
                             &:focus {
