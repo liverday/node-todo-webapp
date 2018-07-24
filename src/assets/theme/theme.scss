@@ -1,5 +1,5 @@
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
 @import '~src/assets/variables';
 
 $primary: darken($base-bg-color, 10%);
@@ -32,5 +32,5 @@ $font-family-base: $font-base;
     }
 }
 
-@import '~bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap/scss/bootstrap';
 
