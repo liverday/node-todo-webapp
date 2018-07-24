@@ -1,6 +1,8 @@
 @import 'node_modules/bootstrap/scss/functions';
 @import 'node_modules/bootstrap/scss/variables';
-@import '~src/assets/variables';
+@import "node_modules/bootstrap/scss/mixins";
+@import "node_modules/bootstrap/scss/root";
+@import '../variables';
 
 $primary: darken($base-bg-color, 10%);
 $theme-colors: (
