@@ -7,7 +7,7 @@ $theme-colors: (
     "primary": $primary
 ) !default;
 
-@import url(//fonts.googleapis.com/css?family=Roboto);
+@import url('//fonts.googleapis.com/css?family=Roboto');
 $font-base: 'Roboto';
 $font-family-sans-serif: $font-base, 'sans-serif' !default;
 $font-family-serif: $font-base, 'serif' !default;

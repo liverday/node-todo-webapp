@@ -3,7 +3,7 @@ import { NotFoundComponent } from './utils/components/not-found/not-found.compon
 import { NgModule } from '@angular/core';
 
 export const routes: Routes = [ 
-    { path: '', component: NotFoundComponent, pathMatch: 'full'},
+    { path: '', pathMatch: 'full', redirectTo: 'login'},
     { path: 'login', loadChildren: './modules/login/login.module#LoginModule'},
     { path: 'register', loadChildren: './modules/register/register.module#RegisterModule'},
     { path: 'todos', loadChildren: './modules/todos/todos.module#TodosModule'},
