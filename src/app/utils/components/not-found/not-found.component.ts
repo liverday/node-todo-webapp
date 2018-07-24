@@ -11,6 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 export class NotFoundComponent {
     constructor(private titleService: Title) {
-        titleService.setTitle('Página não encontrada');
+        titleService.setTitle('Page not found');
     }
 }
