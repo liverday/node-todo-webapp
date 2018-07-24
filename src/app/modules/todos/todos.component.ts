@@ -19,9 +19,9 @@ export class TodosComponent implements OnInit {
     }
 
     async logout() {
-        localStorage.removeItem('authToken');
         try {
             await this.auth.logout();
+            localStorage.removeItem('authToken');
             this.router.navigate(['/login']);
         } catch (e) {
             console.error(e);
