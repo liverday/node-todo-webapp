@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
     styleUrls: ['./not-found.scss'],
     template: `
-        <div [style.text-align]="center"><h1>Página não encontrada</h1></div>
+        <div style="text-align: center;"><h1>Page not Found</h1></div>
     `
 })
 
