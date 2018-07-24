@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class TodosComponent implements OnInit {
 
-    constructor(private titleService: Title, private auth: AuthenticationService, private router: Router ) {
+    constructor(private titleService: Title, private auth: AuthenticationService, private router: Router) {
         this.titleService.setTitle("Todos | Todo WebApp");
     }
 
@@ -19,11 +19,11 @@ export class TodosComponent implements OnInit {
     }
 
     async logout() {
-        localStorage.removeItem('x-auth');
+        localStorage.removeItem('authToken');
         try {
             await this.auth.logout();
             this.router.navigate(['/login']);
-        } catch(e) {
+        } catch (e) {
             console.error(e);
         }
     }

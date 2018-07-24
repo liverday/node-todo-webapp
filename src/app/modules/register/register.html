@@ -12,6 +12,12 @@
                             <alert *ngIf="error" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
                                 {{error}}
                             </alert>
+                            <alert *ngIf="userEmail.errors && userEmail.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                                Email is required.
+                            </alert>
+                            <alert *ngIf="userPassword.errors && userPassword.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                                Password is required.
+                            </alert>
                             <alert *ngIf="userEmail.errors && userEmail.errors.email && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
                                 Email is not valid.
                             </alert>

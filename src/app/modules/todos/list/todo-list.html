@@ -40,7 +40,7 @@
                 </li>
             </ul>
             <div #todoList class="todo-list-container">
-                <ul class="todo-list" *ngIf="todos" [ngClass]="{'overflow-scroll': todos.length > 6}">
+                <ul class="todo-list" *ngIf="todos" [ngClass]="{'overflow-scroll': todos.length > 10}">
                     <li *ngFor="let todo of (todos | orderByStatus: completedFilter) | filterTodoStatus: completedFilter as filteredTodos;" class="todo-item padding-v-slim">
                         <div class="todo-text" *ngIf="todo !== -1">
                             <label class="todo-checkbox" *ngIf="!todo.editable">

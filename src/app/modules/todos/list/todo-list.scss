@@ -18,7 +18,7 @@
         font-size: 1em;
         color: $base-white;
         &:hover {
-            color: $header-bg;
+            color: $base-bg-color;
         }
     }
     .active {
@@ -56,7 +56,7 @@
     .heading {
         font-weight: bold;
         color: $base-white;
-        text-shadow: 3px 3px 15px rgba(0,0,0, 0.4);
+        text-shadow: 3px 3px 5px rgba(0,0,0, 0.4);
     }
 
     & form { 
@@ -202,12 +202,12 @@
         }
     }
     .todo-list-container { 
-        min-height: 240px;
+        min-height: 400px;
         .todo-list {
             padding: 0;
             background-color: $base-white;
             border-radius: 0 0 4px 4px;
-            max-height: 240px;
+            max-height: 400px;
             box-shadow: 3px 3px 20px rgba(0,0,0, 0.3);
             margin: 0 !important;
 

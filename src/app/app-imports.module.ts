@@ -18,14 +18,17 @@ import {
     TypeaheadModule,
     PopoverModule
 } from 'ngx-bootstrap';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgBusyModule } from 'ng-busy';
-
+import { AppFooterComponent } from './utils/components/footer/footer.component'
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 @NgModule({
-    declarations: [],
-    imports: [
+    declarations: [
+        AppFooterComponent,
+    ],
+    imports: [        
         AccordionModule.forRoot(),
         AlertModule.forRoot(),
         ButtonsModule.forRoot(),
@@ -47,7 +50,8 @@ import { NgModule } from '@angular/core';
         NgBusyModule.forRoot({
             message: 'Loading...',
             minDuration: 300
-        })
+        }),
+        MatProgressSpinnerModule,
     ], 
     exports: [
         AccordionModule,
@@ -68,7 +72,9 @@ import { NgModule } from '@angular/core';
         TooltipModule,
         TypeaheadModule,
         PopoverModule,
-        NgBusyModule
+        NgBusyModule,
+        MatProgressSpinnerModule,
+        AppFooterComponent
     ],
     providers: []
 })

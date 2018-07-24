@@ -240,7 +240,6 @@ export class TodoListComponent implements OnInit {
             this.toastr.error(`We can't update todo! Try again with new values`, 'Error!');
             console.error(e);
         }
-
         todo.editable = false;
     }
 }

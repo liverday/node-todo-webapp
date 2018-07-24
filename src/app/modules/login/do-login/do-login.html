@@ -4,24 +4,30 @@
     </alert>
     <form class="form-horizontal" #loginForm="ngForm" (ngSubmit)="onSubmit($event, loginForm)">
         <fieldset [disabled]="state === 'loading'">
+            <alert *ngIf="userEmail.errors && userEmail.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                Email is required.
+            </alert>
+            <alert *ngIf="userPassword.errors && userPassword.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                Password is required.
+            </alert>
             <alert *ngIf="userEmail.errors && userEmail.errors.email && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
                 Email is not valid.
             </alert>
             <alert *ngIf="userPassword.errors && userPassword.errors.minlength && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
-                Minimun length of the password is 8;
+                Minimun length of the password is 8.
             </alert>
             <div class="email">
                 <div class="form-group">
                     <span class="fas fa-envelope"></span>
-                    <input class="form-control" name="username" email #userEmail="ngModel" type="email" [(ngModel)]="user.email" required="true" placeholder="Type an email"
+                    <input class="form-control" name="username" email #userEmail="ngModel" type="email" [(ngModel)]="user.email" required placeholder="Type an email"
                         autofocus autocomplete="off">
                 </div>
             </div>
             <div class="password">
                 <div class="form-group">
                     <span class="fas fa-lock"></span>
-                    <input class="form-control" name="password" #userPassword="ngModel" type="password" [minlength]="8" placeholder="Type a password" [(ngModel)]="user.password" required="true"
-                        autofocus autocomplete="off">
+                    <input class="form-control" name="password" #userPassword="ngModel" type="password" [minlength]="8" placeholder="Type a password"
+                        [(ngModel)]="user.password" required autofocus autocomplete="off">
                 </div>
             </div>
             <div class="form-group">

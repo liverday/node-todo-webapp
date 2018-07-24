@@ -25,7 +25,7 @@ import { AuthInterceptor } from './utils/http-interceptor';
     ToastrModule.forRoot({
       timeOut: 10000,
       preventDuplicates: true,
-      
+      closeButton: true
     }), 
     HttpClientModule
   ],
