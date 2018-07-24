@@ -7,7 +7,7 @@ export const routes: Routes = [
     { path: 'login', loadChildren: './modules/login/login.module#LoginModule'},
     { path: 'register', loadChildren: './modules/register/register.module#RegisterModule'},
     { path: 'todos', loadChildren: './modules/todos/todos.module#TodosModule'},
-    { path: '**', component: NotFoundComponent }
+    { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({
