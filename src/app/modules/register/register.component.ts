@@ -53,8 +53,7 @@ export class RegisterComponent {
         });
     }
 
-    onAlertClose() {
-        this.error = null;
-        this.isValidForm = true;
+    onAlertClose(field) {
+        field.errors = null;
     }
 }

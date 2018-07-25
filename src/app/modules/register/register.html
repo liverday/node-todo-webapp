@@ -12,16 +12,16 @@
                         <alert *ngIf="error" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
                             {{error}}
                         </alert>
-                        <alert *ngIf="userEmail.errors && userEmail.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                        <alert *ngIf="userEmail.errors && userEmail.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose(userEmail)">
                             Email is required.
                         </alert>
-                        <alert *ngIf="userPassword.errors && userPassword.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                        <alert *ngIf="userPassword.errors && userPassword.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose(userPassword)">
                             Password is required.
                         </alert>
-                        <alert *ngIf="userEmail.errors && userEmail.errors.email && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                        <alert *ngIf="userEmail.errors && userEmail.errors.email && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose(userEmail)">
                             Email is not valid.
                         </alert>
-                        <alert *ngIf="userPassword.errors && userPassword.errors.minlength && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                        <alert *ngIf="userPassword.errors && userPassword.errors.minlength && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose(userPassword)">
                             Minimun length of the password is 8
                         </alert>
                         <div class="email">
