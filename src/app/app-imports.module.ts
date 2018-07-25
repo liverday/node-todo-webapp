@@ -20,7 +20,6 @@ import {
 } from 'ngx-bootstrap';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { NgBusyModule } from 'ng-busy';
 import { AppFooterComponent } from './utils/components/footer/footer.component'
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -48,10 +47,6 @@ import { NgModule } from '@angular/core';
         TooltipModule.forRoot(),
         TypeaheadModule.forRoot(),
         PopoverModule.forRoot(),
-        NgBusyModule.forRoot({
-            message: 'Loading...',
-            minDuration: 300
-        }),
         MatProgressSpinnerModule,
         MatProgressBarModule
     ],
@@ -74,9 +69,8 @@ import { NgModule } from '@angular/core';
         TooltipModule,
         TypeaheadModule,
         PopoverModule,
-        NgBusyModule,
         MatProgressSpinnerModule,
-        MatProgressBarModule
+        MatProgressBarModule,
         AppFooterComponent
     ],
     providers: []
