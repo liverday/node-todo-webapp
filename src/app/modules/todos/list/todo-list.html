@@ -1,151 +1,150 @@
+<mat-progress-bar mode="indeterminate" class="progress-bar no-padding no-margin" *ngIf="busy"></mat-progress-bar>
 <div class="container">
-    <div [ngBusy]="busy">
-        <div *ngIf="error" class="padding-v-top no-margin">
-            <alert type="custom-danger" [dismissible]="true" (onClosed)="onAlertClosed()">
-                <strong>Error! </strong>
-                <span [innerHTML]="error"></span>
-            </alert>
-        </div>
-        <div class="fill todo-container padding-h padding-v-top">
-            <h3 class="heading">What to do next?</h3>
-            <form #todoForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(todoForm)">
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" class="form-control" autocomplete="off" [required]="true" name="todo" [(ngModel)]="todo" placeholder="Type a todo">
-                        <div class="input-group-btn" *ngIf="todo">
-                            <button type="submit" class="submit-todo-button">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
+    <div *ngIf="error" class="padding-v-top no-margin">
+        <alert type="custom-danger" [dismissible]="true" (onClosed)="onAlertClosed()">
+            <strong>Error! </strong>
+            <span [innerHTML]="error"></span>
+        </alert>
+    </div>
+    <div class="fill todo-container padding-h padding-v-top">
+        <h3 class="heading">What to do next?</h3>
+        <form #todoForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(todoForm)">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" autocomplete="off" [required]="true" name="todo" [(ngModel)]="todo" placeholder="Type a todo">
+                    <div class="input-group-btn" *ngIf="todo">
+                        <button type="submit" class="submit-todo-button">
+                            <i class="fas fa-plus"></i>
+                        </button>
                     </div>
                 </div>
+            </div>
 
-            </form>
+        </form>
 
-            <ul class="todo-list-header">
-                <li class="todo-header">
-                    <div class="todo-header-text">
-                        <label class="todo-header-checkbox">
-                            <input type="checkbox" [(ngModel)]="checkBoxToggleAll" (change)="toggleAll(checkBoxToggleAll)">
-                            <span class="checkmark-header"></span>
+        <ul class="todo-list-header">
+            <li class="todo-header">
+                <div class="todo-header-text">
+                    <label class="todo-header-checkbox">
+                        <input type="checkbox" [(ngModel)]="checkBoxToggleAll" (change)="toggleAll(checkBoxToggleAll)">
+                        <span class="checkmark-header"></span>
+                    </label>
+                    <span class="todo-text-header-span">Description</span>
+                    <span class="control-header-trash" [ngClass]="{'padding-h': completedFilter}" (click)="storeCheckedAndOpenModal(confirmCheckedDelete)">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    <span class="control-header-check padding-h" *ngIf="!completedFilter" (click)="storeCheckedAndOpenModal(confirmCheckedComplete)">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+            </li>
+        </ul>
+        <div #todoList class="todo-list-container">
+            <ul class="todo-list" *ngIf="todos" [ngClass]="{'overflow-scroll': todos.length > 10}">
+                <li *ngFor="let todo of (todos | orderByStatus: completedFilter) | filterTodoStatus: completedFilter as filteredTodos;" class="todo-item padding-v-slim">
+                    <div class="todo-text" *ngIf="todo !== -1">
+                        <label class="todo-checkbox" *ngIf="!todo.editable">
+                            <input type="checkbox" [disabled]="todo.completed && !completedFilter" name="checkbox" [(ngModel)]="todo.checked" [checked]="todo.checked"
+                                class="custom-checkbox" />
+                            <span class="checkmark"></span>
                         </label>
-                        <span class="todo-text-header-span">Description</span>
-                        <span class="control-header-trash" [ngClass]="{'padding-h': completedFilter}" (click)="storeCheckedAndOpenModal(confirmCheckedDelete)">
+                        <span class="todo-text-span" [ngClass]="{'padding-h-slim-left': todo.editable}" (dblclick)="openDetailModal(todoDetail, todo)">
+                            <span *ngIf="!todo.editable">{{todo.text}}</span>
+                            <form class="form-horizontal" #todoEditableForm="ngForm" (ngSubmit)="onEditableSubmit(todoEditableForm, todo)" *ngIf="todo.editable">
+                                <input type="text" class="form-control form-control-sm" [disabled]="todo.editing" autocomplete="off" required name="text"
+                                    [(ngModel)]="todo.text" placeholder="Type a todo">
+                            </form>
+                        </span>
+                        <span class="control-edit padding-h" tooltip="Edit todo" *ngIf="!todo.completed && !todo.editable" (click)="setEditable(todo)">
+                            <i class="fas fa-pen"></i>
+                        </span>
+                        <span class="control-trash" tooltip="Delete todo" [ngClass]="{'padding-h': completedFilter}" *ngIf="(!todo.completed || (todo.completed && activeLink.completedFilter)) && !todo.editable"
+                            (click)="deleteTodo(todo._id)">
                             <i class="fas fa-trash"></i>
                         </span>
-                        <span class="control-header-check padding-h" *ngIf="!completedFilter" (click)="storeCheckedAndOpenModal(confirmCheckedComplete)">
+                        <span class="control-cancel" class="padding-h" tooltip="Cancel edit" *ngIf="todo.editable" (click)="cancelEdit(todo)">
+                            <i class="fas fa-times"></i>
+                        </span>
+                        <span class="control-validation-check padding-h" *ngIf="(todo.completed && !activeLink.completedFilter) && !todo.editable"
+                            tooltip="Completed">
+                            <i class="far fa-check-circle"></i>
+                        </span>
+
+                        <span class="control-check padding-h" tooltip="Complete todo" *ngIf="!todo.completed && !todo.editable" (click)="completeTodo(todo)">
                             <i class="fas fa-check"></i>
                         </span>
                     </div>
-                </li>
-            </ul>
-            <div #todoList class="todo-list-container">
-                <ul class="todo-list" *ngIf="todos" [ngClass]="{'overflow-scroll': todos.length > 10}">
-                    <li *ngFor="let todo of (todos | orderByStatus: completedFilter) | filterTodoStatus: completedFilter as filteredTodos;" class="todo-item padding-v-slim">
-                        <div class="todo-text" *ngIf="todo !== -1">
-                            <label class="todo-checkbox" *ngIf="!todo.editable">
-                                <input type="checkbox" [disabled]="todo.completed && !completedFilter" name="checkbox" [(ngModel)]="todo.checked" [checked]="todo.checked"
-                                    class="custom-checkbox" />
-                                <span class="checkmark"></span>
-                            </label>
-                            <span class="todo-text-span" [ngClass]="{'padding-h-slim-left': todo.editable}" (dblclick)="openDetailModal(todoDetail, todo)">
-                                <span *ngIf="!todo.editable">{{todo.text}}</span>
-                                <form class="form-horizontal" #todoEditableForm="ngForm" (ngSubmit)="onEditableSubmit(todoEditableForm, todo)" *ngIf="todo.editable">
-                                    <input type="text" class="form-control form-control-sm" [disabled]="todo.editing" autocomplete="off" required name="text"
-                                        [(ngModel)]="todo.text" placeholder="Type a todo">
-                                </form>
-                            </span>
-                            <span class="control-edit padding-h" tooltip="Edit todo" *ngIf="!todo.completed && !todo.editable" (click)="setEditable(todo)">
-                                    <i class="fas fa-pen"></i>
-                                </span>
-                            <span class="control-trash" tooltip="Delete todo" [ngClass]="{'padding-h': completedFilter}" *ngIf="(!todo.completed || (todo.completed && activeLink.completedFilter)) && !todo.editable"
-                                (click)="deleteTodo(todo._id)">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                            <span class="control-cancel" class="padding-h" tooltip="Cancel edit" *ngIf="todo.editable" (click)="cancelEdit(todo)">
-                                <i class="fas fa-times"></i>
-                            </span>
-                            <span class="control-validation-check padding-h" *ngIf="(todo.completed && !activeLink.completedFilter) && !todo.editable"
-                                tooltip="Completed">
-                                <i class="far fa-check-circle"></i>
-                            </span>
-
-                            <span class="control-check padding-h" tooltip="Complete todo" *ngIf="!todo.completed && !todo.editable" (click)="completeTodo(todo)">
-                                <i class="fas fa-check"></i>
-                            </span>
-                        </div>
-                        <div class="empty-todo-text" *ngIf="todo === -1">
-                            <span class="todo-text-span">No data to display.</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="divider padding-v-top"></div>
-        <div class="controls padding-v">
-            <ul class="nav padding-h justify-content-center">
-                <li class="nav-item" (click)="setLinkActive(link)" *ngFor="let link of filterLinks">
-                    <a class="nav-link" [ngClass]="{'active': link == activeLink }">{{ link.label }}</a>
+                    <div class="empty-todo-text" *ngIf="todo === -1">
+                        <span class="todo-text-span">No data to display.</span>
+                    </div>
                 </li>
             </ul>
         </div>
-
-        <ng-template #confirmCheckedDelete>
-            <div class="modal-header">
-                <div class="modal-title">
-                    <h4>Are you sure?</h4>
-                </div>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal(true)">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure of that? All the todos marked will be deleted!
-                <strong>Number of todos marked: {{checkedTodos.length}}</strong>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="closeModal(true)">Cancel</button>
-                <button type="button" class="btn btn-primary" (click)="deleteCheckedTodos()">Confirm</button>
-            </div>
-        </ng-template>
-
-        <ng-template #confirmCheckedComplete>
-            <div class="modal-header">
-                <div class="modal-title">
-                    <h4>Are you sure?</h4>
-                </div>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal(true)">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure of that? All the todos marked will be completed!
-                <strong>Number of todos marked: {{checkedTodos.length}}</strong>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="closeModal(true)">Cancel</button>
-                <button type="button" class="btn btn-primary" (click)="completeCheckedTodos()">Confirm</button>
-            </div>
-        </ng-template>
-
-        <ng-template #todoDetail>
-            <div class="modal-header">
-                <div class="modal-title">
-                    <h4>Detail</h4>
-                </div>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <strong>Text:</strong> {{todoDetailed.text}}
-                <br />
-                <strong>Completed: </strong> {{todoDetailed.completed ? 'Yes' : 'No'}}.
-                <span *ngIf="todoDetailed.completed">
-                    <br />
-                    <strong>Completed At: </strong> {{todoDetailed.completedAt}}
-                </span>
-            </div>
-        </ng-template>
     </div>
+    <div class="divider padding-v-top"></div>
+    <div class="controls padding-v">
+        <ul class="nav padding-h justify-content-center">
+            <li class="nav-item" (click)="setLinkActive(link)" *ngFor="let link of filterLinks">
+                <a class="nav-link" [ngClass]="{'active': link == activeLink }">{{ link.label }}</a>
+            </li>
+        </ul>
+    </div>
+
+    <ng-template #confirmCheckedDelete>
+        <div class="modal-header">
+            <div class="modal-title">
+                <h4>Are you sure?</h4>
+            </div>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal(true)">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Are you sure of that? All the todos marked will be deleted!
+            <strong>Number of todos marked: {{checkedTodos.length}}</strong>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" (click)="closeModal(true)">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="deleteCheckedTodos()">Confirm</button>
+        </div>
+    </ng-template>
+
+    <ng-template #confirmCheckedComplete>
+        <div class="modal-header">
+            <div class="modal-title">
+                <h4>Are you sure?</h4>
+            </div>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal(true)">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Are you sure of that? All the todos marked will be completed!
+            <strong>Number of todos marked: {{checkedTodos.length}}</strong>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" (click)="closeModal(true)">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="completeCheckedTodos()">Confirm</button>
+        </div>
+    </ng-template>
+
+    <ng-template #todoDetail>
+        <div class="modal-header">
+            <div class="modal-title">
+                <h4>Detail</h4>
+            </div>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <strong>Text:</strong> {{todoDetailed.text}}
+            <br />
+            <strong>Completed: </strong> {{todoDetailed.completed ? 'Yes' : 'No'}}.
+            <span *ngIf="todoDetailed.completed">
+                <br />
+                <strong>Completed At: </strong> {{todoDetailed.completedAt}}
+            </span>
+        </div>
+    </ng-template>
 </div>

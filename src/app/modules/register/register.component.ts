@@ -35,7 +35,7 @@ export class RegisterComponent {
         event.preventDefault();
         event.stopPropagation();
         this.state == 'loading';
-        this.busy = new Promise(async (resolve, reject) => {
+        new Promise(async (resolve, reject) => {
             try {
                 const registerResponse = await this.auth.register(this.user.email, this.user.password);
 

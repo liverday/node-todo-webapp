@@ -12,7 +12,6 @@
         margin: 0 auto;
         color: lighten($base-white, 20%);
         font-weight: bold;
-        text-shadow: 3px 3px 5px rgba(0,0,0, 0.5);
     }
 
     & small {
@@ -28,7 +27,6 @@
         top: 30%;
         & h4 {
             color: lighten($base-white, 20%);
-            text-shadow: 3px 3px 5px rgba(0,0,0, 0.5);
             font-weight: bold;
        }
     }

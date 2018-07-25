@@ -28,7 +28,6 @@
     "express": "^4.16.3",
     "install": "^0.12.1",
     "moment": "^2.22.2",
-    "ng-busy": "^6.0.0-rc4",
     "ngx-bootstrap": "^3.0.1",
     "ngx-toastr": "^8.8.0",
     "npm": "^6.2.0",

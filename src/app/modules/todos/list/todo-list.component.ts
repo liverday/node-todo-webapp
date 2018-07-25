@@ -48,14 +48,16 @@ export class TodoListComponent implements OnInit {
         }
 
         this.error = null;
-        this.busy = new Promise(async (resolve, reject) => {
+        new Promise(async (resolve, reject) => {
             try {
+                this.busy = true;
                 const saveResponse = await this.service.saveTodo({ text: this.todo });
                 if (saveResponse.result) {
                     this.toastr.success('Todo saved! Reloading', 'Success!');
                 }
                 await this.reloadTodos();
                 this.todo = null;
+                this.busy = false;
                 resolve();
             } catch (e) {
                 console.error(e);
@@ -75,15 +77,16 @@ export class TodoListComponent implements OnInit {
     }
 
     deleteTodo(id) {
-        this.busy = new Promise(async (resolve, reject) => {
+        new Promise(async (resolve, reject) => {
             try {
+                this.busy = true;
                 const delResponse = await this.service.deleteTodo(id);
                 if (delResponse.result) {
                     this.toastr.success('Todo Deleted! Reloading', 'Success!');
                 }
 
                 await this.reloadTodos();
-
+                this.busy = false;
                 resolve();
             } catch (e) {
                 console.error(e);
@@ -94,8 +97,9 @@ export class TodoListComponent implements OnInit {
 
     completeTodo(todo: Todo) {
         todo.completed = true;
-        this.busy = new Promise(async (resolve, reject) => {
+        new Promise(async (resolve, reject) => {
             try {
+                this.busy = true;
                 const updateResponse = await this.service.updateTodo(todo);
 
                 if (updateResponse) {
@@ -103,6 +107,7 @@ export class TodoListComponent implements OnInit {
                 }
 
                 await this.reloadTodos();
+                this.busy = false;
                 resolve();
             } catch (e) {
                 reject();
@@ -121,7 +126,7 @@ export class TodoListComponent implements OnInit {
     toggleAll = (event) => {
         this.todos.filter(item => {
             if (this.completedFilter == null) {
-                return item;
+                return !item.completed;
             } else {
                 return item.completed == this.completedFilter
             }
@@ -150,8 +155,9 @@ export class TodoListComponent implements OnInit {
 
     deleteCheckedTodos() {
         this.closeModal();
-        this.busy = new Promise(async (resolve, reject) => {
+        new Promise(async (resolve, reject) => {
             try {
+                this.busy = true;
                 if (!this.checkedTodos.length) {
                     throw ('empty_list');
                 }
@@ -162,6 +168,7 @@ export class TodoListComponent implements OnInit {
 
                 this.toastr.success('Todos deleted! Reloading...', 'Success!');
                 await this.reloadTodos();
+                this.busy = false;
                 resolve();
             } catch (e) {
                 if (e == 'empty_list') {
@@ -174,7 +181,7 @@ export class TodoListComponent implements OnInit {
 
     completeCheckedTodos() {
         this.closeModal();
-        this.busy = new Promise(async (resolve, reject) => {
+        new Promise(async (resolve, reject) => {
             try {
                 if (!this.checkedTodos.length) {
                     throw ('empty_list');
@@ -236,6 +243,7 @@ export class TodoListComponent implements OnInit {
             if (updateResponse) {
                 this.toastr.success('Todo updated!', 'Success!');
             }
+            todo.editing = false;
         } catch (e) {
             this.toastr.error(`We can't update todo! Try again with new values`, 'Error!');
             console.error(e);

@@ -14,8 +14,18 @@
     margin-right: $base-margin;
 }
 
+.progress-bar {
+    position: absolute !important;
+    left: 0;
+    opacity: 0.5;
+}
+
 .no-margin {
     margin: 0;
+}
+
+.no-padding {
+    padding: 0;
 }
 
 .padding-v {

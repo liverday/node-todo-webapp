@@ -1,58 +1,57 @@
 <div class="container-fluid main-view">
-    <div [ngBusy]="busy">
-        <div class="register-container">
-            <div class="row" class="text-center">
-                <h2>Register</h2>
-            </div>
-            <div class="row base-margin-v">
-                <div class="register-form">
-
-                    <form #registerForm="ngForm" (ngSubmit)="onSubmit($event, registerForm)">
-                        <fieldset [disabled]="state === 'loading'">
-                            <alert *ngIf="error" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
-                                {{error}}
-                            </alert>
-                            <alert *ngIf="userEmail.errors && userEmail.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
-                                Email is required.
-                            </alert>
-                            <alert *ngIf="userPassword.errors && userPassword.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
-                                Password is required.
-                            </alert>
-                            <alert *ngIf="userEmail.errors && userEmail.errors.email && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
-                                Email is not valid.
-                            </alert>
-                            <alert *ngIf="userPassword.errors && userPassword.errors.minlength && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
-                                Minimun length of the password is 8
-                            </alert>
-                            <div class="email">
-                                <div class="form-group">
-                                    <span class="fas fa-envelope"></span>
-                                    <input class="form-control" name="email" type="email" #userEmail="ngModel" email [(ngModel)]="user.email" required placeholder="Type an email"
-                                        autofocus autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="password">
-                                <div class="form-group">
-                                    <span class="fas fa-lock"></span>
-                                    <input class="form-control" name="password" type="password" #userPassword="ngModel" [minlength]="8" [(ngModel)]="user.password"
-                                        required placeholder="Type a password" autofocus autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-primary btn-block">Register</button>
-                                <div class="login-text-container padding-v">
-                                    <span class="login-text">
-                                        Already have an account? Try sign-in
-                                        <a routerLink="/login">here!</a>
-                                    </span>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-            
+    <div class="register-container">
+        <div class="row" class="text-center">
+            <h2>Register</h2>
         </div>
-        <app-footer></app-footer>
+        <div class="row base-margin-v">
+            <div class="register-form">
+
+                <form #registerForm="ngForm" (ngSubmit)="onSubmit($event, registerForm)">
+                    
+                    <fieldset [disabled]="state === 'loading'">
+                        <alert *ngIf="error" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                            {{error}}
+                        </alert>
+                        <alert *ngIf="userEmail.errors && userEmail.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                            Email is required.
+                        </alert>
+                        <alert *ngIf="userPassword.errors && userPassword.errors.required && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                            Password is required.
+                        </alert>
+                        <alert *ngIf="userEmail.errors && userEmail.errors.email && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                            Email is not valid.
+                        </alert>
+                        <alert *ngIf="userPassword.errors && userPassword.errors.minlength && !isValidForm" type="danger" [dismissible]="true" (onClose)="onAlertClose()">
+                            Minimun length of the password is 8
+                        </alert>
+                        <div class="email">
+                            <div class="form-group">
+                                <span class="fas fa-envelope"></span>
+                                <input class="form-control" name="email" type="email" #userEmail="ngModel" email [(ngModel)]="user.email" required placeholder="Type an email"
+                                    autofocus autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="password">
+                            <div class="form-group">
+                                <span class="fas fa-lock"></span>
+                                <input class="form-control" name="password" type="password" #userPassword="ngModel" [minlength]="8" [(ngModel)]="user.password"
+                                    required placeholder="Type a password" autofocus autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block">Register</button>
+                            <div class="login-text-container padding-v">
+                                <span class="login-text">
+                                    Already have an account? Try sign-in
+                                    <a routerLink="/login">here!</a>
+                                </span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
     </div>
+    <app-footer></app-footer>
 </div>

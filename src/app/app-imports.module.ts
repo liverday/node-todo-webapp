@@ -19,6 +19,7 @@ import {
     PopoverModule
 } from 'ngx-bootstrap';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgBusyModule } from 'ng-busy';
 import { AppFooterComponent } from './utils/components/footer/footer.component'
 import { CommonModule } from '@angular/common';
@@ -28,7 +29,7 @@ import { NgModule } from '@angular/core';
     declarations: [
         AppFooterComponent,
     ],
-    imports: [        
+    imports: [
         AccordionModule.forRoot(),
         AlertModule.forRoot(),
         ButtonsModule.forRoot(),
@@ -52,7 +53,8 @@ import { NgModule } from '@angular/core';
             minDuration: 300
         }),
         MatProgressSpinnerModule,
-    ], 
+        MatProgressBarModule
+    ],
     exports: [
         AccordionModule,
         AlertModule,
@@ -74,6 +76,7 @@ import { NgModule } from '@angular/core';
         PopoverModule,
         NgBusyModule,
         MatProgressSpinnerModule,
+        MatProgressBarModule
         AppFooterComponent
     ],
     providers: []
