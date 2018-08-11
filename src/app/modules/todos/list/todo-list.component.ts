@@ -41,7 +41,7 @@ export class TodoListComponent implements OnInit {
 
     }
 
-    async onSubmit(form) {
+    onSubmit = async (form) => {
         if (!form.valid) {
             this.error = 'Todo is required';
             return;
@@ -67,7 +67,7 @@ export class TodoListComponent implements OnInit {
 
     }
 
-    onAlertClosed() {
+    onAlertClosed = () => {
         this.error = null;
     }
 
@@ -76,7 +76,7 @@ export class TodoListComponent implements OnInit {
         this.completedFilter = this.activeLink.completedFilter
     }
 
-    deleteTodo(id) {
+    deleteTodo = (id) =>{
         new Promise(async (resolve, reject) => {
             try {
                 this.busy = true;
@@ -95,7 +95,7 @@ export class TodoListComponent implements OnInit {
         });
     }
 
-    completeTodo(todo: Todo) {
+    completeTodo = (todo: Todo) =>{
         todo.completed = true;
         new Promise(async (resolve, reject) => {
             try {
@@ -116,7 +116,7 @@ export class TodoListComponent implements OnInit {
     }
 
 
-    async reloadTodos() {
+    reloadTodos = async () => {
         const response = await this.service.getTodos();
         if (response) {
             this.todos = response.result;
@@ -135,16 +135,16 @@ export class TodoListComponent implements OnInit {
         });
     }
 
-    storeCheckedAndOpenModal(template) {
+    storeCheckedAndOpenModal = (template) => {
         this.checkedTodos = this.todos.filter(item => item.checked == true);
         this.openModal(template);
     }
 
-    openModal(template) {
+    openModal = (template) => {
         this.modalRef = this.modalService.show(template);
     }
 
-    openDetailModal(template, todo) {
+    openDetailModal = (template, todo) => {
         this.todoDetailed = {
             text: todo.text,
             completed: todo.completed,
@@ -153,7 +153,7 @@ export class TodoListComponent implements OnInit {
         this.modalRef = this.modalService.show(template);
     }
 
-    deleteCheckedTodos() {
+    deleteCheckedTodos = () => {
         this.closeModal();
         new Promise(async (resolve, reject) => {
             try {
@@ -174,15 +174,17 @@ export class TodoListComponent implements OnInit {
                 if (e == 'empty_list') {
                     this.toastr.error('Delete list is empty! Try again', 'Error');
                 }
+                this.busy = false;
                 reject();
             }
         }).then(() => this.invalidateChecked());
     }
 
-    completeCheckedTodos() {
+    completeCheckedTodos = () => {
         this.closeModal();
         new Promise(async (resolve, reject) => {
             try {
+                this.busy = true;
                 if (!this.checkedTodos.length) {
                     throw ('empty_list');
                 }
@@ -201,36 +203,37 @@ export class TodoListComponent implements OnInit {
                 if (e == 'empty_list') {
                     this.toastr.error('Update list is empty! Try again', 'Error');
                 }
+                this.busy = false;
                 reject();
             }
         });
     }
 
-    closeModal(invalidateChecked: boolean = false) {
+    closeModal = (invalidateChecked: boolean = false) => {
         this.modalRef.hide();
         if (invalidateChecked) {
             this.invalidateChecked();
         }
     }
 
-    invalidateChecked() {
+    invalidateChecked = () => {
         this.checkedTodos = [];
         this.checkBoxToggleAll = false;
         this.toggleAll(false);
     }
 
 
-    setEditable(todo) {
+    setEditable = (todo) => {
         todo.cachedText = todo.text;
         todo.editable = true;
     }
 
-    cancelEdit(todo) {
+    cancelEdit = (todo) => {
         todo.text = todo.cachedText;
         todo.editable = false;
     }
 
-    async onEditableSubmit(form, todo) {
+     onEditableSubmit = async (form, todo) => {
         if (!form.valid) {
             this.error = 'Todo is required';
             return;
