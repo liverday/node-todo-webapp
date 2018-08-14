@@ -198,6 +198,7 @@ export class TodoListComponent implements OnInit {
 
                 this.toastr.success('Todos completed! Reloading...', 'Success!');
                 await this.reloadTodos();
+                this.busy = false;
                 resolve();
             } catch (e) {
                 if (e == 'empty_list') {
